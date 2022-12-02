@@ -23,8 +23,15 @@ class Map:
         # 7 = basic tile with bottom left grass
         # 8 = basic tile with bottom grass
         # 9 = basic tile with bottom right grass
-        tileInSpriteMap = {0: [0, 0, 32, 32], 1: [
-            32, 0, 32, 32], 2: [64, 0, 32, 32], 3: [96, 0, 32, 32], 4: [32, 32, 32, 32], 5: [64, 32, 32, 32], 6: [96, 32, 32, 32], 7: [32, 64, 32, 32], 8: [64, 64, 32, 32], 9: [96, 64, 32, 32]}
+
+        # 10 = special grass with top grass
+        # 11 = special grass with top grass
+        # 12 = special grass with top grass
+        # 13 = special grass with top grass
+        # 14 = special grass with top grass
+        # 15 = special grass with top grass
+        tileInSpriteMap = {0: [0, 0], 1: [
+            32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32], 7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128], 13: [96, 128], 14: [128, 128], 15: [160, 128]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])*32
@@ -32,20 +39,17 @@ class Map:
             self.renderedImage = pygame.Surface(
                 (self.screenX, self.screenY))
             for y, line in enumerate(f.readlines()):
-
-                self.map.append([])
                 for x, symbols in enumerate(line.split()):
                     if int(symbols) < 0:
                         pass
                     else:
                         print(x*32, y*32, tileInSpriteMap[int(symbols)])
-                        self.map[y].append(
+                        self.map.append(
                             Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
 
     def render(self):
-        for row in self.map:
-            for tile in row:
-                tile.draw(self.renderedImage)
+        for tile in self.map:
+            tile.draw(self.renderedImage)
 
     def getMap(self):
         return self.renderedImage
@@ -74,15 +78,15 @@ class SpriteSheet:
         self.filename = filename
         self.sprite_sheet = pygame.image.load(filename).convert()
 
-    def get_sprite(self, x, y, w, h):
+    def get_sprite(self, x, y):
         sprite = pygame.Surface((32, 32))
         sprite.set_colorkey((0, 0, 0))
         sprite.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
         return sprite
 
     def getSprite(self, spriteData):
-        x, y, width, height = spriteData
-        image = self.get_sprite(x, y, 32, 32)
+        x, y = spriteData
+        image = self.get_sprite(x, y)
         return image
 
 
@@ -93,16 +97,27 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
     running = True
     map = Map("game\\gameLoop\\testmap.mp", "game\\assets\\Tiles\\tilemap.png")
+    mapX = 0
+    mapY = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    mapX += 16
+                elif event.key == pygame.K_RIGHT:
+                    mapX -= 16
+                elif event.key == pygame.K_UP:
+                    mapY += 16
+                elif event.key == pygame.K_DOWN:
+                    mapY -= 16
         screen.fill((80, 80, 0))
         # map.map[2][1].draw(screen)
         # screen.blit(map.spriteSheet.get_sprite(32, 0, 32, 32), (32, 0))
         mapImg = map.scaledToHeight(600)
         # mapImg = pygame.transform.scale(mapImg, (800, 600))
-        screen.blit(mapImg, (0, 0))
+        screen.blit(mapImg, (mapX, mapY))
 
         pygame.display.flip()
         clock.tick(60)
