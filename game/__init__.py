@@ -13,37 +13,12 @@ class GameStates:
         return self.gameState
 
     def setState(self, state):
+        print("state changed to", state)
         if state in self.gameStateList:
             self.gameState = state
         else:
             raise ValueError("Invalid game state")
 
-
-class Settings:
-    def __init__(self) -> None:
-        self.settings = {
-            "fullscreen": False,
-            "resolution": [800, 600],
-            "volume": 0.5,
-            "fps": 60,
-            "vsync": True,
-        }
-        self.def_settings = {
-            "fullscreen": False,
-            "resolution": [1280, 720],
-            "volume": 0.5,
-            "fps": 60,
-            "vsync": True,
-        }
-
-    def getdef_settings(self):
-        return self.def_settings
-
-    def getSettings(self):
-        return self.settings
-
-    def setSettings(self, settings):
-        self.settings = settings
 
 
 # Path: game\__init__.py

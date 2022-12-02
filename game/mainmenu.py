@@ -3,6 +3,22 @@ import sys
 from button import Button
 import os
 
+class GameStates:
+    def __init__(self) -> None:
+        self.gameState = "menu"
+        self.gameStateList = ["menu", "game",
+                              "pause", "settings", "credits", "exit"]
+
+    def getState(self):
+        return self.gameState
+
+    def setState(self, state):
+        print("state changed to", state)
+        if state in self.gameStateList:
+            self.gameState = state
+        else:
+            raise ValueError("Invalid game state")
+
 
 class MenuClass:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
@@ -67,6 +83,7 @@ class MenuClass:
             button.update(self.SCREEN)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
+            print("click")
             self.OPTIONS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.QUIT_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:
@@ -79,7 +96,7 @@ def get_font(size: int):  # Returns Press-Start-2P in the desired size
 
 
 if __name__ == '__main__':
-
+    state = GameStates() 
     pygame.init()
     monitor_size = [pygame.display.Info().current_w,
                     pygame.display.Info().current_h]
@@ -89,8 +106,8 @@ if __name__ == '__main__':
 
     SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 
-    gamestates = {"menu": True, "game": False, "options": False}
-    menu = MenuClass(size_x, size_y, SCREEN, gamestates)
+    # gamestates = {"menu": True, "game": False, "options": False}
+    menu = MenuClass(size_x, size_y, SCREEN, state )
     while True:
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
