@@ -4,6 +4,7 @@ import pygame
 class Map:
     def __init__(self, file, spriteMap) -> None:
         self.file = file
+        self.respawnPoint = (0, 0)
         self.spriteSheet = SpriteSheet(spriteMap)
         self.map = []
         self.renderedImage = None
@@ -23,19 +24,19 @@ class Map:
         # 7 = basic tile with bottom left grass
         # 8 = basic tile with bottom grass
         # 9 = basic tile with bottom right grass
-
-        # 10 = special grass with top grass
+        # 10 = special grass with top left grass
         # 11 = special grass with top grass
         # 12 = special grass with top grass
         # 13 = special grass with top grass
         # 14 = special grass with top grass
-        # 15 = special grass with top grass
+        # 15 = special grass with top right grass
         tileInSpriteMap = {0: [0, 0], 1: [
             32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32], 7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128], 13: [96, 128], 14: [128, 128], 15: [160, 128]}
         with open(file, "r") as f:
             data = f.readline().split(";")
-            self.screenY = int(data[0])*32
-            self.screenX = int(data[1])*32
+            self.screenY = int(data[0])
+            self.screenX = int(data[1])
+            self.respawnPoint = (int(data[2]), int(data[3]))
             self.renderedImage = pygame.Surface(
                 (self.screenX, self.screenY))
             for y, line in enumerate(f.readlines()):
