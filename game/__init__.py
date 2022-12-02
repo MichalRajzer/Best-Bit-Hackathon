@@ -20,7 +20,6 @@ class GameStates:
             raise ValueError("Invalid game state")
 
 
-
 # Path: game\__init__.py
 pygame.init()
 pygame.display.set_caption("My Game")
@@ -42,6 +41,7 @@ while gameStates.getState() != "exit":
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
+        # pygame.display.update()
     while gameStates.getState() == "inGame":
         pass
 

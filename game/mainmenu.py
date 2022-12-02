@@ -3,6 +3,7 @@ import sys
 from button import Button
 import os
 
+
 class GameStates:
     def __init__(self) -> None:
         self.gameState = "menu"
@@ -61,23 +62,17 @@ class MenuClass:
         self.QUIT_BUTTON.update(self.SCREEN)
 
     def update(self):
-        """update menu"""
+        """ Update menu """
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         self.PLAY_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.OPTIONS_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.QUIT_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
-        self.PLAY_BUTTON.update(self.SCREEN)
-        self.OPTIONS_BUTTON.update(self.SCREEN)
-        self.QUIT_BUTTON.update(self.SCREEN)
-        pygame.display.update()
-        pass
 
     def menuLoop(self, event, mouse_pos):
-        """ odpowiada za klikanie """
-        self.MENU_MOUSE_POS = mouse_pos
-        # highlighting buttons
+        """ Odpowiada za klikanie """
         self.update()
+        self.MENU_MOUSE_POS = mouse_pos
         for button in [self.PLAY_BUTTON, self.OPTIONS_BUTTON, self.QUIT_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
@@ -88,6 +83,7 @@ class MenuClass:
             self.QUIT_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:
             self.resize()
+        pygame.display.update()
 
 
 def get_font(size: int):  # Returns Press-Start-2P in the desired size
@@ -96,7 +92,7 @@ def get_font(size: int):  # Returns Press-Start-2P in the desired size
 
 
 if __name__ == '__main__':
-    state = GameStates() 
+    state = GameStates()
     pygame.init()
     monitor_size = [pygame.display.Info().current_w,
                     pygame.display.Info().current_h]
@@ -106,8 +102,7 @@ if __name__ == '__main__':
 
     SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 
-    # gamestates = {"menu": True, "game": False, "options": False}
-    menu = MenuClass(size_x, size_y, SCREEN, state )
+    menu = MenuClass(size_x, size_y, SCREEN, state)
     while True:
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -116,9 +111,7 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.VIDEORESIZE:
-                menu.resize()
             else:
                 menu.menuLoop(event, MENU_MOUSE_POS)
 
-        pygame.display.update()
+        # pygame.display.update()
