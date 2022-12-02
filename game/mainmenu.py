@@ -61,14 +61,16 @@ class MenuClass:
         """ odpowiada za klikanie """
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         # highlighting buttons
+        self.update()
         for button in [self.PLAY_BUTTON, self.OPTIONS_BUTTON, self.QUIT_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.OPTIONS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
-
             self.QUIT_BUTTON.checkForInput(self.MENU_MOUSE_POS)
+        elif event.type == pygame.VIDEORESIZE:
+            self.resize()
 
 
 def get_font(size: int):  # Returns Press-Start-2P in the desired size
