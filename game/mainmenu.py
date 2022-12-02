@@ -87,19 +87,19 @@ if __name__ == '__main__':
 
     SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 
-gamestates = {"menu": True, "game": False, "options": False}
-menu = MenuClass(size_x, size_y, SCREEN, gamestates)
-while True:
+    gamestates = {"menu": True, "game": False, "options": False}
+    menu = MenuClass(size_x, size_y, SCREEN, gamestates)
+    while True:
 
-    MENU_MOUSE_POS = pygame.mouse.get_pos()
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.VIDEORESIZE:
-            menu.resize()
-        else:
-            menu.menuLoop(event)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.VIDEORESIZE:
+                menu.resize()
+            else:
+                menu.menuLoop(event)
 
-    pygame.display.update()
+        pygame.display.update()
