@@ -32,11 +32,11 @@ class MenuClass:
             self.button_image, (self.size_x/4, self.size_y/10))
 
         self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*1/6, self.size_y*2/3),
-                                  text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates)
+                                  text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="game")
         self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/3),
-                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates)
+                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type = "settings")
         self.QUIT_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
-                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates)
+                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type = "exit")
 
         self.SCREEN.blit(self.BG, (0, 0))
 
