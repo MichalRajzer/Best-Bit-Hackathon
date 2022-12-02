@@ -27,19 +27,20 @@ class Map:
             32, 0, 32, 32], 2: [64, 0, 32, 32], 3: [96, 0, 32, 32], 4: [32, 32, 32, 32], 5: [64, 32, 32, 32], 6: [96, 32, 32, 32], 7: [32, 64, 32, 32], 8: [64, 64, 32, 32], 9: [96, 64, 32, 32]}
         with open(file, "r") as f:
             data = f.readline().split(";")
-            self.screenY = int(data[0])
-            self.screenX = int(data[1])
+            self.screenY = int(data[0])*32
+            self.screenX = int(data[1])*32
             self.renderedImage = pygame.Surface(
                 (self.screenX, self.screenY))
             for y, line in enumerate(f.readlines()):
-                print(y)
+
                 self.map.append([])
                 for x, symbols in enumerate(line.split()):
                     if int(symbols) < 0:
                         pass
                     else:
+                        print(x*32, y*32, tileInSpriteMap[int(symbols)])
                         self.map[y].append(
-                            Tile(tileInSpriteMap[int(symbols)], x, y, self.spriteSheet))
+                            Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
 
     def render(self):
         for row in self.map:
@@ -48,6 +49,9 @@ class Map:
 
     def getMap(self):
         return self.renderedImage
+
+    def scaledToHeight(self, height):
+        return pygame.transform.scale(self.renderedImage, (int(self.screenX * height/self.screenY), height))
 
 
 class Tile(pygame.sprite.Sprite):
@@ -71,19 +75,20 @@ class SpriteSheet:
         self.sprite_sheet = pygame.image.load(filename).convert()
 
     def get_sprite(self, x, y, w, h):
-        sprite = pygame.Surface((w, h))
+        sprite = pygame.Surface((32, 32))
         sprite.set_colorkey((0, 0, 0))
-        sprite.blit(self.sprite_sheet, (0, 0), (x, y, w, h))
+        sprite.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
         return sprite
 
     def getSprite(self, spriteData):
         x, y, width, height = spriteData
-        image = self.get_sprite(x, y, width, height)
+        image = self.get_sprite(x, y, 32, 32)
         return image
 
 
 if __name__ == '__main__':
     pygame.init()
+    # screen = pygame.display.set_mode((20*32, 4*32))
     screen = pygame.display.set_mode((800, 600))
     clock = pygame.time.Clock()
     running = True
@@ -92,10 +97,12 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        screen.fill((0, 0, 0))
-        # mapImg = map.getMap()
-        # mapImg = pygame.transform.scale(mapImg, (800, 800*4/19))
-        # screen.blit(mapImg, (0, 0))
+        screen.fill((80, 80, 0))
+        # map.map[2][1].draw(screen)
+        # screen.blit(map.spriteSheet.get_sprite(32, 0, 32, 32), (32, 0))
+        mapImg = map.scaledToHeight(600)
+        # mapImg = pygame.transform.scale(mapImg, (800, 600))
+        screen.blit(mapImg, (0, 0))
 
         pygame.display.flip()
         clock.tick(60)
