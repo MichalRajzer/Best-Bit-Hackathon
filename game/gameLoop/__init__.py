@@ -3,5 +3,5 @@ class GameLoop:
         self.player = player
         self.saveFile = saveFile
 
-    def update(self, events):
+    def update(self, events, gamestates):
         self.player.update(events)
