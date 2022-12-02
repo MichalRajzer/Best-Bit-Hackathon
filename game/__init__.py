@@ -11,6 +11,12 @@ class GameStates:
     def getState(self):
         return self.gameState
 
+    def setState(self, state):
+        if state in self.gameStateList:
+            self.gameState = state
+        else:
+            raise ValueError("Invalid game state")
+
 
 # Path: game\__init__.py
 pygame.init()
