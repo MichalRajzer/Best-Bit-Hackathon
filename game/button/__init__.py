@@ -1,6 +1,7 @@
 class Button:
-    def __init__(self, image, pos, text_input, font, base_color, hovering_color, gamestates):
+    def __init__(self, image, pos, text_input, font, base_color, hovering_color, gamestates, type):
         self.image = image
+        self.type = type
         self.x_pos = pos[0]
         self.y_pos = pos[1]
         self.text_input = text_input
@@ -18,14 +19,20 @@ class Button:
         if self.image is not None:
             screen.blit(self.image, self.rect)
         screen.blit(self.text, self.text_rect)
+    
+    def checkForInput(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+            return True
+        return False
 
     def changeColor(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.text = self.font.render(
                 self.text_input, True, self.hovering_color)
+            print("hovering")
         else:
             self.text = self.font.render(
                 self.text_input, True, self.base_color)
 
-    def onClick(self, type):
-        self.gamestates.changeState(type)
+    def onClick(self):
+        self.gamestates.changeState(self.type)
