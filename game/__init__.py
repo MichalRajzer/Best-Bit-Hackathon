@@ -18,6 +18,7 @@ class GameStates:
         else:
             raise ValueError("Invalid game state")
 
+
 class Settings:
     def __init__(self) -> None:
         self.settings = {
@@ -66,7 +67,7 @@ while gameStates.getState() != "exit":
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
-    while inGame:
+    while gameStates.getState() == "inGame":
         pass
 
 pygame.quit()

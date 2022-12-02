@@ -34,9 +34,9 @@ class MenuClass:
         self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*1/6, self.size_y*2/3),
                                   text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="game")
         self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/3),
-                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type = "settings")
+                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
         self.QUIT_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
-                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type = "exit")
+                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="exit")
 
         self.SCREEN.blit(self.BG, (0, 0))
 
@@ -65,7 +65,6 @@ class MenuClass:
         for button in [self.PLAY_BUTTON, self.OPTIONS_BUTTON, self.QUIT_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
-            
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.OPTIONS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
@@ -103,6 +102,6 @@ if __name__ == '__main__':
             elif event.type == pygame.VIDEORESIZE:
                 menu.resize()
             else:
-                menu.menuLoop(event)
+                menu.menuLoop(event, MENU_MOUSE_POS)
 
         pygame.display.update()
