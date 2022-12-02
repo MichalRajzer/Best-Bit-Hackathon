@@ -57,14 +57,15 @@ class MenuClass:
         pygame.display.update()
         pass
 
-    def menuLoop(self, event):
+    def menuLoop(self, event, mouse_pos):
         """ odpowiada za klikanie """
-        self.MENU_MOUSE_POS = pygame.mouse.get_pos()
+        self.MENU_MOUSE_POS = mouse_pos
         # highlighting buttons
         self.update()
         for button in [self.PLAY_BUTTON, self.OPTIONS_BUTTON, self.QUIT_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
+            
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.OPTIONS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
