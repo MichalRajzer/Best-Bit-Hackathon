@@ -1,19 +1,25 @@
 import pygame
 import sys
 from button import Button
+import os
 
 
 class MenuClass:
-    def __init__(self, size_x: int, size_y: int, SCREEN) -> None:
+    def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
         """create menu class"""
+        self.gamestates = gamestates
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         self.size_x = size_x
         self.size_y = size_y
         self.SCREEN = SCREEN
 
         pygame.display.set_caption("Ba(TT)ery")
-        self.BG = pygame.image.load("assets/")
-        self.button_image = pygame.image.load("assets/")
+        self.dirname = os.path.dirname(__file__)
+        background = os.path.join(self.dirname, 'assets/background.png')
+        self.BG = pygame.image.load(background)
+        button = os.path.join(self.dirname, 'assets/menu_button.png')
+        self.button_image = pygame.image.load(button)
+
         self.resize()
 
     def resize(self):
@@ -26,11 +32,11 @@ class MenuClass:
             self.button_image, (self.size_x/4, self.size_y/10))
 
         self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*1/6, self.size_y*2/3),
-                                  text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White")
+                                  text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates)
         self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/3),
-                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White")
+                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates)
         self.QUIT_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
-                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White")
+                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates)
 
         self.SCREEN.blit(self.BG, (0, 0))
 
@@ -66,7 +72,8 @@ class MenuClass:
 
 
 def get_font(size: int):  # Returns Press-Start-2P in the desired size
-    return pygame.font.Font("assets/font.ttf", int(size))
+    font = os.path.join(os.path.dirname(__file__), 'assets/fonts/font.ttf')
+    return pygame.font.Font(font, int(size))
 
 
 if __name__ == '__main__':
@@ -80,8 +87,8 @@ if __name__ == '__main__':
 
     SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 
-
-menu = MenuClass(size_x, size_y, SCREEN)
+gamestates = {"menu": True, "game": False, "options": False}
+menu = MenuClass(size_x, size_y, SCREEN, gamestates)
 while True:
 
     MENU_MOUSE_POS = pygame.mouse.get_pos()
