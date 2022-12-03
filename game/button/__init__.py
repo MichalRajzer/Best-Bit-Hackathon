@@ -46,14 +46,16 @@ class Button:
 
 
 class volume_button:
-    def __init__(self, screen, image, pos, text_input, font, base_color, value):
+    def __init__(self,screen, image, pos, text_input, font, base_color, value):
         self.image = image
         self.value = value
         self.screen = screen
         self.x_pos = pos[0]
         self.y_pos = pos[1]
         self.text_input = text_input
+        self.type = type
         self.font = font
+        self.gamestates = gamestates
         self.base_color = base_color
         self.text = self.font.render(self.text_input, True, self.base_color)
         if self.image is None:
@@ -78,8 +80,7 @@ class volume_button:
 
     def onClick(self):
         mixer.Sound("game//assets//sounds//button.wav").play()
-        mixer.Sound.set_volume(mixer.Sound.get_volume() + self.value)
-        f = open('game//volume.txt', 'r')
+        f = open('game//volume.txt','r')
         volume = f.read()
         f.close()
         f = open('game//volume.txt', 'w')
@@ -96,7 +97,8 @@ class volume_button:
             else:
                 volume += 1
                 print(volume)
-
+                
+            
         elif self.value == "DOWN":
             if volume >= 1:
                 volume -= 1
