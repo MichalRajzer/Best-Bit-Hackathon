@@ -8,10 +8,10 @@ from gameLoop.map import Map
 from resolutions import Resolution
 from controls import Controls
 from util import load_save, reset_keys, write_save
+from pygame import mixer
 
 class GameStates:
     def __init__(self) -> None:
-
         self.gameState = "menu"
         self.gameStateList = ["menu", "game", "resolution",
                               "pause", "settings","controls", "credits", "exit"]
@@ -42,7 +42,12 @@ gameStates = GameStates()
 menu = MenuClass(size_x, size_y, screen, gameStates)
 settings = Settings(size_x, size_y, screen, gameStates)
 resolution = Resolution(size_x, size_y, screen, gameStates)
-controls = Controls(size_x, size_y, screen, gameStates, save)
+if gameStates.getState() != "game":
+    mixer.music.load("game/assets/sounds/jiglr - Odyssey.mp3")
+    mixer.music.play(-1)
+    mixer.music.set_volume(1)
+else:
+    mixer.music.stop
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py
@@ -76,19 +81,12 @@ while gameStates.getState() != "exit":
             else:
                 resolution.resolutionsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
-    while gameStates.getState() == "controls":
-        # Path: game\settings.py
-        # This is where the settings code will go
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                gameStates.setState("exit")
-            else:
-                controls.controlsLoop(event, pygame.mouse.get_pos())
-        clock.tick(60)
+    
     if gameStates.getState() == "game":
         map = Map("game\\assets\\maps\\map1.mp",
                   "game\\assets\\Tiles\\tilemap.png")
         player = Player(screen, "game\\assets\\player\\player.png", map)
+        mixer.music.stop()
         while gameStates.getState() == "game":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
