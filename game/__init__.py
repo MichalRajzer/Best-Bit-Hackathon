@@ -118,7 +118,7 @@ while gameStates.getState() != "exit":
             clock.tick(60)
             if player.inTeleporter():
                 break
-        map = Map("game\\assets\\maps\\map4.mp",
+        map = Map("game\\assets\\maps\\map3.mp",
                   "game\\assets\\Tiles\\tilemap.png")
         player = Player(screen, "game\\assets\\player\\player.png", map, {
                         "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
