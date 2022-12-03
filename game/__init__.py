@@ -1,29 +1,20 @@
-import sys
+import sys, pygame
 from mainmenu import MenuClass
 from settings import Settings
 from gameLoop import GameLoop
 from player import Player
 from gameLoop.map import Map
 from resolutions import Resolution
-<<<<<<< Updated upstream
-from controls import Controls
 from util import load_save, reset_keys, write_save
 from pygame import mixer
 
-=======
->>>>>>> Stashed changes
 
 class GameStates:
     def __init__(self) -> None:
         self.level = 1
         self.gameState = "menu"
-<<<<<<< Updated upstream
-        self.gameStateList = ["menu", "game", "resolution",
-                              "pause", "settings", "controls", "credits", "exit"]
-=======
         self.gameStateList = ["menu", "game", "resolution"
                               "pause", "settings", "credits", "exit"]
->>>>>>> Stashed changes
 
     def getState(self):
         return self.gameState
@@ -49,7 +40,6 @@ pygame.display.set_caption("My Game")
 clock = pygame.time.Clock()
 save = load_save()
 gameStates = GameStates()
-<<<<<<< Updated upstream
 menu = MenuClass(size_x, size_y, screen, gameStates)
 settings = Settings(size_x, size_y, screen, gameStates)
 resolution = Resolution(size_x, size_y, screen, gameStates)
@@ -59,11 +49,6 @@ if gameStates.getState() != "game":
     mixer.music.set_volume(1)
 else:
     mixer.music.stop
-=======
-menu = MenuClass(800, 600, screen, gameStates)
-settings = Settings(800, 600, screen, gameStates)
-resolution = Resolution(800, 600, screen, gameStates)
->>>>>>> Stashed changes
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py
@@ -89,7 +74,6 @@ while gameStates.getState() != "exit":
                 settings.settingsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
         # pygame.display.update()
-<<<<<<< Updated upstream
     while gameStates.getState() == "resolution":
         # Path: game\settings.py
         # This is where the settings code will go
@@ -100,32 +84,13 @@ while gameStates.getState() != "exit":
                 resolution.resolutionsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
 
-    # while gameStates.getState() == "controls":
-    #     # Path: game\controls.py
-    #     # This is where the controls code will go
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             gameStates.setState("exit")
-    #         else:
-    #             controls.controlsLoop(event, pygame.mouse.get_pos())
-    #     clock.tick(60)
-=======
-    if gameStates.gameState() == "game":
-        player = Player(screen, "game\\assets\\player.png")
-        map = Map("")
-        while gameStates.getState() == "game":
-            pass
-    while gameStates.getState() == "inGame":
-        pass
->>>>>>> Stashed changes
-
     if gameStates.getState() == "game":
         mixer.music.stop()
         background = pygame.image.load(
-            "game\\assets\\maps\\bg_2.png").convert()
-        map = Map("game\\assets\\maps\\map2.mp",
-                  "game\\assets\\Tiles\\tilemap.png")
-        player = Player(screen, "game\\assets\\player\\player.png", map, {
+            "game//assets//maps//bg_2.png").convert()
+        map = Map("game//assets//maps//map2.mp",
+                  "game//assets//Tiles//tilemap.png")
+        player = Player(screen, "game//assets//player//player.png", map, {
                         "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
         while gameStates.getState() == "game":
             for event in pygame.event.get():

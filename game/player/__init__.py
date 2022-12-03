@@ -130,7 +130,7 @@ class Player(pygame.sprite.Sprite):
                     self.Vy = -500
                     self.physicsY += 20
                     self.mapY += 20
-                    mixer.Sound("game\\assets\\sounds\\jump.wav").play()
+                    mixer.Sound("game//assets//sounds//jump.wav").play()
                 elif event.key == self.keybinds["Left"] and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.pressedKeys.append("a")
@@ -150,7 +150,7 @@ class Player(pygame.sprite.Sprite):
                         "run", 0, self.currentAnimation[2], 1, 10]
                     self.Vx = 1000
                     self.currentAnimation[1] = 0
-                    mixer.Sound("game\\assets\\sounds\\charge.wav").play()
+                    mixer.Sound("game//assets//sounds//charge.wav").play()
 
                 # elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
                 #     self.currentAnimation = [
@@ -159,7 +159,7 @@ class Player(pygame.sprite.Sprite):
             elif event.type == pygame.MOUSEBUTTONDOWN and self.alive:
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 1, 10]
-                mixer.Sound("game\\assets\\sounds\\hit.wav").play()
+                mixer.Sound("game//assets//sounds//hit.wav").play()
             elif event.type == pygame.KEYUP:
                 try:
                     if event.key == self.keybinds["Left"]:
@@ -272,7 +272,7 @@ class Player(pygame.sprite.Sprite):
 if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode((20*32, 4*64))
-    player = Player(screen, "game\\assets\\player\\player.png", "")
+    player = Player(screen, "game//assets//player//player.png", "")
     # player.draw(screen)
     i = 0
     clock = pygame.time.Clock()

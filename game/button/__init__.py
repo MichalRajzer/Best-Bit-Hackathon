@@ -55,7 +55,7 @@ class volume_button:
         self.text_input = text_input
         self.type = type
         self.font = font
-        self.gamestates = gamestates
+        
         self.base_color = base_color
         self.text = self.font.render(self.text_input, True, self.base_color)
         if self.image is None:

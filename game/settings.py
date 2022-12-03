@@ -43,12 +43,10 @@ class Settings:
         volum = float(volum)
         volum = int(volum*10)
         self.VOLUME = str(volum )
-        self.VOLUME_BUTTON = volume_button(self.SCREEN, pos=(self.size_x/2, self.size_y*5/8), text_input="VOLUME", image=self.button_image, font=get_font(self.font_size_menu),base_color="#d7fcd4", value=0,gamestates=self.gamestates, type="settings")
-        self.MONITOR_VOLUME = volume_button(self.SCREEN,pos=(self.size_x*3/4, self.size_y*15/24), image=self.button_music,text_input= self.VOLUME,base_color="#d7fcd4",font=get_font(self.font_size_menu), value= 0,gamestates=self.gamestates, type="settings")
-        self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "UP",gamestates=self.gamestates, type="settings")
-        self.VOLUME_DOWN = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*9/12),image = self.arrow_down, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "DOWN",gamestates=self.gamestates, type="settings")            
-        self.CONTROLS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/12),
-                                  text_input="CONTROLS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="controls")
+        self.VOLUME_BUTTON = volume_button(self.SCREEN, pos=(self.size_x/2, self.size_y*5/8), text_input="VOLUME", image=self.button_image, font=get_font(self.font_size_menu),base_color="#d7fcd4", value=0)
+        self.MONITOR_VOLUME = volume_button(self.SCREEN,pos=(self.size_x*3/4, self.size_y*15/24), image=self.button_music,text_input= self.VOLUME,base_color="#d7fcd4",font=get_font(self.font_size_menu), value= 0)
+        self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "UP")
+        self.VOLUME_DOWN = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*9/12),image = self.arrow_down, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "DOWN")            
         self.RESOLUTION_BUTTON = Button(self.button_image_res, pos=(self.size_x/2, self.size_y*9/24),
                                      text_input="RESOLUTIONS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="resolution")
         self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*5/6),
@@ -60,7 +58,6 @@ class Settings:
         self.VOLUME_DOWN.update(self.SCREEN)
         self.VOLUME_UP.update(self.SCREEN)
         self.RESOLUTION_BUTTON.update(self.SCREEN)
-        self.CONTROLS_BUTTON.update(self.SCREEN)
         self.BACK_BUTTON.update(self.SCREEN)
 
     def update(self):
@@ -70,7 +67,6 @@ class Settings:
         self.VOLUME_UP.changeColor(self.MENU_MOUSE_POS)
         self.VOLUME_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.VOLUME_DOWN.changeColor(self.MENU_MOUSE_POS)
-        self.CONTROLS_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.RESOLUTION_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.BACK_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
@@ -79,14 +75,13 @@ class Settings:
         """ Odpowiada za klikanie """
         self.update()
         self.MENU_MOUSE_POS = mouse_pos
-        for button in [self.CONTROLS_BUTTON, self.RESOLUTION_BUTTON, self.BACK_BUTTON]:
+        for button in [self.RESOLUTION_BUTTON, self.BACK_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.VOLUME_DOWN.checkForInput(self.MENU_MOUSE_POS)
             self.VOLUME_UP.checkForInput(self.MENU_MOUSE_POS)
-            self.CONTROLS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.RESOLUTION_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.BACK_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:
