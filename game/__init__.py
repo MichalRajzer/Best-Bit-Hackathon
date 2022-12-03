@@ -1,4 +1,4 @@
-import sys, pygame
+import sys, pygame, os
 from mainmenu import MenuClass
 from settings import Settings
 from gameLoop import GameLoop
@@ -36,7 +36,11 @@ size_x = monitor_size[0]*2/3
 size_y = monitor_size[1]*2/3
 # controls = Controls()
 screen = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Ba(TT)ery")
+dirname = os.path.dirname(__file__)
+icon = os.path.join(dirname, 'assets/icon.png')
+pygame_icon = pygame.image.load(icon)
+pygame.display.set_icon(pygame_icon)
 clock = pygame.time.Clock()
 save = load_save()
 gameStates = GameStates()
@@ -87,10 +91,10 @@ while gameStates.getState() != "exit":
     if gameStates.getState() == "game":
         mixer.music.stop()
         background = pygame.image.load(
-            "game//assets//maps//bg_2.png").convert()
-        map = Map("game//assets//maps//map2.mp",
-                  "game//assets//Tiles//tilemap.png")
-        player = Player(screen, "game//assets//player//player.png", map, {
+            "game\\assets\\maps\\bg_2.png").convert()
+        map = Map("game\\assets\\maps\\map2.mp",
+                  "game\\assets\\Tiles\\tilemap.png")
+        player = Player(screen, "game\\assets\\player\\player.png", map, {
                         "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
         while gameStates.getState() == "game":
             for event in pygame.event.get():
