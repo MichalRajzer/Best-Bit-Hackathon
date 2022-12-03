@@ -35,6 +35,7 @@ monitor_size = [pygame.display.Info().current_w,
 
 size_x = monitor_size[0]*2/3
 size_y = monitor_size[1]*2/3
+# controls = Controls()
 screen = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 pygame.display.set_caption("My Game")
 clock = pygame.time.Clock()
@@ -83,6 +84,16 @@ while gameStates.getState() != "exit":
             else:
                 resolution.resolutionsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
+
+    # while gameStates.getState() == "controls":
+    #     # Path: game\controls.py
+    #     # This is where the controls code will go
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             gameStates.setState("exit")
+    #         else:
+    #             controls.controlsLoop(event, pygame.mouse.get_pos())
+    #     clock.tick(60)
 
     if gameStates.getState() == "game":
         map = Map("game\\assets\\maps\\map2.mp",

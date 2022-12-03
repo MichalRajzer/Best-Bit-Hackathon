@@ -35,8 +35,6 @@ class MenuClass:
         self.dirname = os.path.dirname(__file__)
         background = os.path.join(self.dirname, 'assets/bg_logo.png')
         self.BG = pygame.image.load(background)
-        
-        
         button = os.path.join(self.dirname, 'assets/menu_button.png')
         self.button_image = pygame.image.load(button)
 
@@ -59,7 +57,6 @@ class MenuClass:
                                   text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="exit")
 
         self.SCREEN.blit(self.BG, (0, 0))
-        
 
         self.OPTIONS_BUTTON.update(self.SCREEN)
         self.PLAY_BUTTON.update(self.SCREEN)
