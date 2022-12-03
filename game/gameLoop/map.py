@@ -6,7 +6,8 @@ class Map:
         self.file = file
         self.respawnPoint = (0, 0)
         self.spriteSheet = SpriteSheet(spriteMap)
-        self.map = []
+        self.colliders = []
+        self.decorative = []
         self.renderedImage = None
         self.loadMap(self.file)
         self.render()
@@ -51,12 +52,17 @@ class Map:
                     if int(symbols) < 0:
                         pass
                     else:
-                        print(x*32, y*32, tileInSpriteMap[int(symbols)])
-                        self.map.append(
-                            Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
+                        if int(symbols) in [0]:
+                            self.decorative.append(
+                                Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
+                        else:
+                            self.colliders.append(
+                                Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
 
     def render(self):
-        for tile in self.map:
+        for tile in self.colliders:
+            tile.draw(self.renderedImage)
+        for tile in self.decorative:
             tile.draw(self.renderedImage)
 
     def getMap(self):
