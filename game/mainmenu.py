@@ -34,6 +34,8 @@ class MenuClass:
         self.dirname = os.path.dirname(__file__)
         background = os.path.join(self.dirname, 'assets/background.png')
         self.BG = pygame.image.load(background)
+        logo= os.path.join(self.dirname, 'assets/logo.png')
+        self.LG = pygame.image.load(logo)
         button = os.path.join(self.dirname, 'assets/menu_button.png')
         self.button_image = pygame.image.load(button)
 
@@ -45,6 +47,7 @@ class MenuClass:
         self.font_size_menu = self.size_y/10
         self.font_size_buttons = self.size_y/12
         self.BG = pygame.transform.scale(self.BG, (self.size_x, self.size_y))
+        self.LG = pygame.transform.scale(self.LG, (self.size_x, self.size_y))
         self.button_image = pygame.transform.scale(
             self.button_image, (self.size_x/4, self.size_y/10))
 
@@ -56,6 +59,7 @@ class MenuClass:
                                   text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="exit")
 
         self.SCREEN.blit(self.BG, (0, 0))
+        self.SCREEN.blit(self.LG,(0, 0))
 
         self.OPTIONS_BUTTON.update(self.SCREEN)
         self.PLAY_BUTTON.update(self.SCREEN)
