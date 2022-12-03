@@ -76,6 +76,7 @@ class Tile(pygame.sprite.Sprite):
         self.y = y
         self.spriteSheet = spritesheet
         self.loadTexture(tileType)
+        self.rect = pygame.Rect(x, y, 32, 32)
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))

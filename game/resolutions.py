@@ -15,7 +15,7 @@ class Resolution:
 
         pygame.display.set_caption("Ba(TT)ery")
         self.dirname = os.path.dirname(__file__)
-        background = os.path.join(self.dirname, 'assets/background.png')
+        background = os.path.join(self.dirname, 'assets/bg.png')
         self.BG = pygame.image.load(background)
         button = os.path.join(self.dirname, 'assets/menu_button.png')
         self.button_image = pygame.image.load(button)
@@ -26,10 +26,11 @@ class Resolution:
         """resize all images"""
         self.size_x, self.size_y = self.SCREEN.get_size()
         self.font_size_menu = self.size_y/10
-        self.font_size_buttons = self.size_y/20
+        self.font_size_buttons = self.size_y/16
         self.BG = pygame.transform.scale(self.BG, (self.size_x, self.size_y))
         self.button_image = pygame.transform.scale(
-            self.button_image, (self.size_x/4, self.size_y/10))
+            self.button_image, (self.size_x*3/10, self.size_y*3/20))
+
         self.RES_1920_1080_BUTTON = Button(None, pos=(self.size_x/2, self.size_y*1/6),
                                   text_input="1920x1080", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")        
         self.RES_1080_720_BUTTON = Button(None, pos=(self.size_x/2, self.size_y*2/6),
