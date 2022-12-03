@@ -1,5 +1,7 @@
 import pygame, os 
 from button import Button
+
+
 class Settings:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
         """create settings class"""
@@ -27,11 +29,11 @@ class Settings:
         self.button_image = pygame.transform.scale(
             self.button_image, (self.size_x/4, self.size_y/10))
 
-        self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*1/6, self.size_y*2/3),
-                                  text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="game")
-        self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/3),
-                                     text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
-        self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
+        self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*1/3),
+                                  text_input="KEYS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="game")
+        self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*3/6),
+                                     text_input="RESOLUTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
+        self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*5/6),
                                   text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="menu")
 
         self.SCREEN.blit(self.BG, (0, 0))
@@ -75,7 +77,7 @@ if __name__ == "__main__":
     pygame.font.init()
     SCREEN = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
     gamestates = {"game": False, "settings": False, "exit": False}
-    settings = settings(800, 600, SCREEN, gamestates)
+    settings = Settings(800, 600, SCREEN, gamestates)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

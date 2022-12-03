@@ -8,7 +8,7 @@ class GameStates:
     def __init__(self) -> None:
         self.gameState = "menu"
         self.gameStateList = ["menu", "game",
-                              "pause", "settings", "credits", "exit", "back"]
+                              "pause", "settings", "credits", "exit"]
 
     def getState(self):
         return self.gameState
@@ -24,10 +24,11 @@ class GameStates:
 # Path: game\__init__.py
 pygame.init()
 pygame.display.set_caption("My Game")
-screen = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 gameStates = GameStates()
 menu = MenuClass(800, 600, screen, gameStates)
+settings = Settings(800, 600, screen, gameStates)
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py
@@ -37,8 +38,7 @@ while gameStates.getState() != "exit":
                 gameStates.setState("exit")
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    inMenu = False
-                    inGame = True
+                    pygame.display.set_mode((200, 300))
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
@@ -50,7 +50,7 @@ while gameStates.getState() != "exit":
             if event.type == pygame.QUIT:
                 gameStates.setState("exit")
             else:
-                menu.settingsLoop(event, pygame.mouse.get_pos())
+                settings .settingsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
         # pygame.display.update()
     while gameStates.getState() == "inGame":
