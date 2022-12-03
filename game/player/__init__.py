@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         self.animations = {key: None
                            for key in self.listOfAnimations}
         # [animation, current frame, direction, charged, frames per frame]
-        self.currentAnimation = ["walk", 0,  1, 0, 10]
+        self.currentAnimation = ["default", 0,  1, 1, 10]
         self.getAllSprites()
         # print(self.animations)
         self.x = self.screen.get_width() / 2
@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
         while collisions:
             if pygame.sprite.spritecollide(self, self.map.hazardous, False):
                 self.alive = False
-                self.currentAnimation = ["death", 0, 1, 0, 10]
+                self.currentAnimation = ["death", 0, 1, 1, 10]
                 return
             self.Vy = 0
             self.mapY += 1 * self.yDir
@@ -77,7 +77,7 @@ class Player(pygame.sprite.Sprite):
         while collisions:
             if pygame.sprite.spritecollide(self, self.map.hazardous, False):
                 self.alive = False
-                self.currentAnimation = ["death", 0, 1, 0, 10]
+                self.currentAnimation = ["death", 0, 1, 1, 10]
                 return
             self.Vx = 0
             self.mapX += 1 * self.xDir
@@ -122,20 +122,20 @@ class Player(pygame.sprite.Sprite):
                 elif event.key == self.keybinds["Left"] and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.pressedKeys.append("a")
-                    self.currentAnimation = ["walk", 0, 0, 0, 10]
+                    self.currentAnimation = ["walk", 0, 0, 1, 10]
                     self.xDir = -1
                     self.Vx = 200
                     self.currentAnimation[1] = 0
                 elif event.key == self.keybinds["Right"] and self.currentAnimation[0] != "walk":
                     self.pressedKeys.append("d")
-                    self.currentAnimation = ["walk", 0, 1, 0, 10]
+                    self.currentAnimation = ["walk", 0, 1, 1, 10]
                     self.xDir = 1
                     self.Vx = 200
                     self.currentAnimation[1] = 0
                 elif event.key == self.keybinds["Dash"] and self.currentAnimation[0] != "walk":
                     self.pressedKeys.append("d")
                     self.currentAnimation = [
-                        "run", 0, self.currentAnimation[2], 0, 10]
+                        "run", 0, self.currentAnimation[2], 1, 10]
                     self.Vx = 1000
                     self.currentAnimation[1] = 0
                     mixer.Sound("game\\assets\\sounds\\charge.wav").play()
@@ -146,7 +146,7 @@ class Player(pygame.sprite.Sprite):
                 #     self.currentAnimation[1] = 0
             elif event.type == pygame.MOUSEBUTTONDOWN and self.alive:
                 self.currentAnimation = ["attack", 0,
-                                         self.currentAnimation[2], 0, 10]
+                                         self.currentAnimation[2], 1, 10]
                 mixer.Sound("game\\assets\\sounds\\hit.wav").play()
             elif event.type == pygame.KEYUP:
                 try:
@@ -165,7 +165,7 @@ class Player(pygame.sprite.Sprite):
                 if self.currentAnimation[0] == "walk":
                     self.frameCounter = 0
                     self.currentAnimation = ["default",
-                                             0, self.currentAnimation[2], 0, 1]
+                                             0, self.currentAnimation[2], 1, 1]
         # self.gravity(1/60)
         if self.alive:
             for key in self.pressedKeys:
