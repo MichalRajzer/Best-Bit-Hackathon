@@ -64,6 +64,14 @@ class Player:
                       [832, 32, 32], [896, 32, 32], ]
             anim = self.parseAnimation(frames)
             self.animations["run"] = [anim, None]
+        elif animation == "attack":
+            frames = [[1024, 34, 32], [1088, 34, 32],]
+            anim = self.parseAnimation(frames)
+            self.animations["attack"] = [anim, None]
+        elif animation == "death":
+            frames = [[1152, 32, 32], [1216, 32, 32], [1280, 32, 32],]
+            anim = self.parseAnimation(frames)
+            self.animations["death"] = [anim, None]
 
     def parseAnimation(self, frames):
         leftAnimNotCharged = []
@@ -112,7 +120,8 @@ if __name__ == '__main__':
     # animation = ["walk", 4]
     # animation = ["jump", 6]
     # animation = ["run", 4]
-    animation = ["attack", 2]
+    # animation = ["attack", 2]
+    animation = ["death", 3]
     while True:
         screen.fill((70, 0, 70))
         playerImg1 = player.animations[animation[0]][0][0][0][i]
