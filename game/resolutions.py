@@ -55,7 +55,7 @@ class Resolution:
         self.BACK_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
 
-    def resolutionLoop(self, event, mouse_pos):
+    def resolutionsLoop(self, event, mouse_pos):
         """ Odpowiada za klikanie """
         self.update()
         self.MENU_MOUSE_POS = mouse_pos
@@ -84,15 +84,21 @@ def get_font(size: int):  # Returns Press-Start-2P in the desired size
 if __name__ == "__main__":
     pygame.init()
     pygame.font.init()
-    SCREEN = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
+    monitor_size = [pygame.display.Info().current_w,
+                    pygame.display.Info().current_h]
+
+    size_x = monitor_size[0]*2/3
+    size_y = monitor_size[1]*2/3
+
+    SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
     gamestates = {"game": False, "settings": False, "exit": False}
-    settings = Resolution(800, 600, SCREEN, gamestates)
+    settings = Resolution(size_x, size_y, SCREEN, gamestates)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            settings.settingsLoop(event, pygame.mouse.get_pos())
+            settings.resolutionsLoop(event, pygame.mouse.get_pos())
             if gamestates["game"]:
                 print("game")
             elif gamestates["settings"]:

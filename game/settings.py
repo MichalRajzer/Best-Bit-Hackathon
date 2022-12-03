@@ -31,7 +31,7 @@ class Settings:
         self.button_image_res = pygame.transform.scale(
             self.button_image, (self.size_x*5/10, self.size_y*3/20))
 
-        self.KEY_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*1/3),
+        self.CONTROLS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*1/3),
                                   text_input="CONTROLS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="controls")
         self.RESOLUTION_BUTTON = Button(self.button_image_res, pos=(self.size_x/2, self.size_y*3/6),
                                      text_input="RESOLUTIONS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="resolution")
@@ -41,13 +41,13 @@ class Settings:
         self.SCREEN.blit(self.BG, (0, 0))
 
         self.RESOLUTION_BUTTON.update(self.SCREEN)
-        self.KEY_BUTTON.update(self.SCREEN)
+        self.CONTROLS_BUTTON.update(self.SCREEN)
         self.BACK_BUTTON.update(self.SCREEN)
 
     def update(self):
         """ Update menu """
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
-        self.KEY_BUTTON.changeColor(self.MENU_MOUSE_POS)
+        self.CONTROLS_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.RESOLUTION_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.BACK_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
@@ -56,12 +56,12 @@ class Settings:
         """ Odpowiada za klikanie """
         self.update()
         self.MENU_MOUSE_POS = mouse_pos
-        for button in [self.KEY_BUTTON, self.RESOLUTION_BUTTON, self.BACK_BUTTON]:
+        for button in [self.CONTROLS_BUTTON, self.RESOLUTION_BUTTON, self.BACK_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print("click")
+            self.CONTROLS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.RESOLUTION_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.BACK_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:
@@ -78,9 +78,15 @@ def get_font(size: int):  # Returns Press-Start-2P in the desired size
 if __name__ == "__main__":
     pygame.init()
     pygame.font.init()
-    SCREEN = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
+    monitor_size = [pygame.display.Info().current_w,
+                    pygame.display.Info().current_h]
+
+    size_x = monitor_size[0]*2/3
+    size_y = monitor_size[1]*2/3
+
+    SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
     gamestates = {"game": False, "settings": False, "exit": False}
-    settings = Settings(800, 600, SCREEN, gamestates)
+    settings = Settings(size_x, size_y, SCREEN, gamestates)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

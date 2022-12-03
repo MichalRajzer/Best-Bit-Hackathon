@@ -1,15 +1,12 @@
-import pygame, os
+import pygame
+import os
 from button import Button
-from util import write_save
+
 
 class Controls:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
         """create settings class"""
         self.gamestates = gamestates
-        #self.save_file = save
-        #self.curr_block = save["curr_profile"]
-        #self.controls = self.save_file["controls"][str(self.curr_block)]
-        #self.setup()
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         self.size_x = size_x
         self.size_y = size_y
@@ -41,7 +38,7 @@ class Controls:
         self.RES_800_600_BUTTON = Button(None, pos=(self.size_x/2, self.size_y*3/6),
                                   text_input="800x600", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
         self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*5/6),
-                                  text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
+                                  text_input="Yeey", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
 
         self.SCREEN.blit(self.BG, (0, 0))
         self.RES_1920_1080_BUTTON.update(self.SCREEN)
@@ -87,15 +84,21 @@ def get_font(size: int):  # Returns Press-Start-2P in the desired size
 if __name__ == "__main__":
     pygame.init()
     pygame.font.init()
-    SCREEN = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
+    monitor_size = [pygame.display.Info().current_w,
+                    pygame.display.Info().current_h]
+
+    size_x = monitor_size[0]*2/3
+    size_y = monitor_size[1]*2/3
+
+    SCREEN = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
     gamestates = {"game": False, "settings": False, "exit": False}
-    settings = Resolution(800, 600, SCREEN, gamestates)
+    settings = Controls(size_x, size_y, SCREEN, gamestates)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            settings.settingsLoop(event, pygame.mouse.get_pos())
+            settings.controlsLoop(event, pygame.mouse.get_pos())
             if gamestates["game"]:
                 print("game")
             elif gamestates["settings"]:
