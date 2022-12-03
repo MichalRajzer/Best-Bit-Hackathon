@@ -30,7 +30,7 @@ class GameStates:
 # Path: game\__init__.py
 pygame.init()
 monitor_size = [pygame.display.Info().current_w,
-                    pygame.display.Info().current_h]
+                pygame.display.Info().current_h]
 
 size_x = monitor_size[0]*2/3
 size_y = monitor_size[1]*2/3
