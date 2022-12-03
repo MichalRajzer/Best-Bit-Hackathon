@@ -40,6 +40,7 @@ class Player(pygame.sprite.Sprite):
         self.physHeightOffset = 0
         self.pressedKeys = []
         self.alive = True
+        self.deadTime = 0
         self.rect = pygame.Rect(
             -self.physicsX+self.physWidthOffset, -self.physicsY+self.physHeightOffset, self.physWidth, self.physHeight)
 
@@ -113,6 +114,8 @@ class Player(pygame.sprite.Sprite):
                     self.currentAnimation[1] = self.currentAnimation[1]-1
                 else:
                     self.currentAnimation[1] = 0
+        if self.alive == False:
+            self.deadTime += 1
         self.screen.blit(
             pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
 
@@ -180,6 +183,7 @@ class Player(pygame.sprite.Sprite):
                                              0, self.currentAnimation[2], 1, 1]
         # self.gravity(1/60)
         if self.alive:
+            self.calculatePosition(1/60)
             for key in self.pressedKeys:
                 if key == self.keybinds["Left"]:
                     self.xDir = -1
@@ -189,13 +193,17 @@ class Player(pygame.sprite.Sprite):
                     self.Vx = 200
                 elif key == self.keybinds["Dash"]:
                     self.Vx = 1000
-        if self.alive:
-            self.calculatePosition(1/60)
         self.events = []
 
     def handleEvent(self, event):
         self.events.append(event)
         # print(event)
+
+    def triedToRespawn(self):
+        print(self.deadTime)
+        if self.deadTime > 150:
+            return True
+        return False
 
     def getAllSprites(self):
         for animation in self.listOfAnimations:

@@ -89,41 +89,53 @@ while gameStates.getState() != "exit":
         mixer.music.stop()
         background = pygame.image.load(
             "game//assets//maps//bg_2.png").convert()
-        map = Map("game//assets//maps//map2.mp",
-                  "game//assets//Tiles//tilemap.png")
-        player = Player(screen, "game//assets//player//player.png", map, {
-                        "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
-        while gameStates.getState() == "game":
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    gameStates.setState("exit")
-                player.handleEvent(event)
-            screen.fill((0, 0, 0))
-            screen.blit(background, (0, 0))
-            mapImg = player.map.getMap()
-            screen.blit(mapImg, (player.mapX, player.mapY))
-            player.update()
-            pygame.display.update()
-            clock.tick(60)
-            if player.inTeleporter():
-                break
-        map = Map("game\\assets\\maps\\map3.mp",
-                  "game\\assets\\Tiles\\tilemap.png")
-        player = Player(screen, "game\\assets\\player\\player.png", map, {
-                        "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
-        while gameStates.getState() == "game":
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    gameStates.setState("exit")
-                player.handleEvent(event)
-            screen.fill((0, 0, 0))
-            screen.blit(background, (0, 0))
-            mapImg = player.map.getMap()
-            screen.blit(mapImg, (player.mapX, player.mapY))
-            player.update()
-            pygame.display.update()
-            clock.tick(60)
-            if player.inTeleporter():
-                gameStates.setState("menu")
+        PlayingThisLevel = True
+        while PlayingThisLevel:
+            map = Map("game//assets//maps//map2.mp",
+                      "game//assets//Tiles//tilemap.png")
+            player = Player(screen, "game//assets//player//player.png", map, {
+                            "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
+            while gameStates.getState() == "game":
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameStates.setState("exit")
+                    player.handleEvent(event)
+                screen.fill((0, 0, 0))
+                screen.blit(background, (0, 0))
+                mapImg = player.map.getMap()
+                screen.blit(mapImg, (player.mapX, player.mapY))
+                player.update()
+                pygame.display.update()
+                clock.tick(60)
+                if player.inTeleporter():
+                    PlayingThisLevel = False
+                    break
+                if player.triedToRespawn():
+                    break
+
+        PlayingThisLevel = True
+
+        while PlayingThisLevel:
+            map = Map("game\\assets\\maps\\map3.mp",
+                      "game\\assets\\Tiles\\tilemap.png")
+            player = Player(screen, "game\\assets\\player\\player.png", map, {
+                            "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
+            while gameStates.getState() == "game":
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameStates.setState("exit")
+                    player.handleEvent(event)
+                screen.fill((0, 0, 0))
+                screen.blit(background, (0, 0))
+                mapImg = player.map.getMap()
+                screen.blit(mapImg, (player.mapX, player.mapY))
+                player.update()
+                pygame.display.update()
+                clock.tick(60)
+                if player.inTeleporter():
+                    PlayingThisLevel = False
+                    gameStates.setState("menu")
+                if player.triedToRespawn():
+                    break
 pygame.quit()
 sys.exit()
