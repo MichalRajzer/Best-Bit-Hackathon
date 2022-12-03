@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 
 class Button:
@@ -37,6 +38,7 @@ class Button:
                 self.text_input, True, self.base_color)
 
     def onClick(self, isRes=False):
+        mixer.Sound("game\\assets\\sounds\\button.wav").play()
         if isRes == False:
             self.gamestates.setState(self.type)
         else:

@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 
 class Player(pygame.sprite.Sprite):
@@ -104,10 +105,10 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(
             pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
         #
-        pygame.draw.rect(self.screen, (255, 0, 0), self.rect)
-        for tile in self.map.colliders:
-            pygame.draw.rect(self.screen, (0, 255, 0), tile.rect)
-        #
+        ##pygame.draw.rect(self.screen, (255, 0, 0), self.rect)
+        # for tile in self.map.colliders:
+        #    pygame.draw.rect(self.screen, (0, 255, 0), tile.rect)
+        ##
         for event in self.events:
             if event.type == pygame.KEYDOWN and self.alive:
                 if event.key == self.keybinds["Jump"] and self.currentAnimation[0] != "jump":
@@ -117,6 +118,7 @@ class Player(pygame.sprite.Sprite):
                     self.Vy = -500
                     self.physicsY += 20
                     self.mapY += 20
+                    mixer.Sound("game\\assets\\sounds\\jump.wav").play()
                 elif event.key == self.keybinds["Left"] and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.pressedKeys.append("a")
@@ -136,6 +138,8 @@ class Player(pygame.sprite.Sprite):
                         "run", 0, self.currentAnimation[2], 0, 10]
                     self.Vx = 1000
                     self.currentAnimation[1] = 0
+                    mixer.Sound("game\\assets\\sounds\\charge.wav").play()
+
                 # elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
                 #     self.currentAnimation = [
                 #         "death", 0, self.currentAnimation[2], 0, 20]
@@ -143,6 +147,7 @@ class Player(pygame.sprite.Sprite):
             elif event.type == pygame.MOUSEBUTTONDOWN and self.alive:
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 0, 10]
+                mixer.Sound("game\\assets\\sounds\\hit.wav").play()
             elif event.type == pygame.KEYUP:
                 try:
                     if event.key == self.keybinds["Left"]:
