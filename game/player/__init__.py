@@ -138,6 +138,8 @@ class Player(pygame.sprite.Sprite):
                         "run", 0, self.currentAnimation[2], 0, 10]
                     self.Vx = 1000
                     self.currentAnimation[1] = 0
+                    mixer.Sound("game\\assets\\sounds\\charge.wav").play()
+
                 # elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
                 #     self.currentAnimation = [
                 #         "death", 0, self.currentAnimation[2], 0, 20]
