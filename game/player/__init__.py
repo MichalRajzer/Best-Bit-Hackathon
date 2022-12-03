@@ -2,16 +2,15 @@ import pygame
 
 
 class Player:
-    def __init__(self, screen, spriteSheet1, spriteSheet2) -> None:
+    def __init__(self, screen, spriteSheet, map) -> None:
         """
         Basic player class
         screen is the screen to draw to
-        spriteSheet1 is the sprite sheet for the player in discharged state
-        spriteSheet2 is the sprite sheet for the player in charged state"""
-        # TODO UPDATE FOR TWO CHARGED AND NOT CHARGED STATES
+        spriteSheet1 is the sprite sheet for the player"""
+        self.map = map
         self.screen = screen
         self.state = "idle"
-        self.sprite_sheet = pygame.image.load(spriteSheet1).convert_alpha()
+        self.sprite_sheet = pygame.image.load(spriteSheet).convert_alpha()
         self.listOfAnimations = ["default", "walk",
                                  "jump", "run", "attack", "death"]
         self.animations = {key: None
@@ -26,6 +25,7 @@ class Player:
         self.events = []
 
     def update(self):
+        """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
         self.frameCounter += 1
         if self.frameCounter == self.currentAnimation[4]:
             self.frameCounter = 0
@@ -34,9 +34,13 @@ class Player:
             if self.currentAnimation[1] >= len(self.animations[self.currentAnimation[0]][0][0]):
                 if self.currentAnimation[0] == "attack":
                     self.currentAnimation[0] = "default"
-                self.currentAnimation[1] = 0
+                    self.currentAnimation[1] = 0
+                elif self.currentAnimation[0] == "death":
+                    self.currentAnimation[1] = self.currentAnimation[1]-1
+                else:
+                    self.currentAnimation[1] = 0
         self.screen.blit(
-            self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (self.x, self.y))
+            pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
         for event in self.events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w and self.currentAnimation[0] != "jump":
@@ -45,11 +49,18 @@ class Player:
                 elif event.key == pygame.K_a and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.currentAnimation = ["walk", 0, 0, 0, 10]
+                    self.currentAnimation[1] = 0
                 elif event.key == pygame.K_d and self.currentAnimation[0] != "walk":
                     self.currentAnimation = ["walk", 0, 1, 0, 10]
+                    self.currentAnimation[1] = 0
+                elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
+                    self.currentAnimation = [
+                        "death", 0, self.currentAnimation[2], 0, 20]
+                    self.currentAnimation[1] = 0
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.currentAnimation = ["attack", 0, 1, 0, 10]
-            elif event.type == pygame.KEYUP and self.state != "falling":
+                self.currentAnimation = ["attack", 0,
+                                         self.currentAnimation[2], 0, 10]
+            elif event.type == pygame.KEYUP and self.state != "walk":
                 print("idle")
                 self.frameCounter = 0
                 self.currentAnimation = ["default",

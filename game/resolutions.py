@@ -1,7 +1,9 @@
-import pygame, os 
+import pygame
+import os
 from button import Button
 
-class Settings:
+
+class Resolution:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
         """create settings class"""
         self.gamestates = gamestates
@@ -19,7 +21,7 @@ class Settings:
         self.button_image = pygame.image.load(button)
 
         self.resize()
-        
+
     def resize(self):
         """resize all images"""
         self.size_x, self.size_y = self.SCREEN.get_size()
@@ -30,9 +32,9 @@ class Settings:
             self.button_image, (self.size_x/4, self.size_y/10))
 
         self.KEY_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*1/3),
-                                  text_input="KEYS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="keys")
+                                 text_input="KEYS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="keys")
         self.RESOLUTION_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*3/6),
-                                     text_input="RESOLUTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="resolution")
+                                        text_input="RESOLUTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="resolution")
         self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*5/6),
                                   text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="menu")
 
@@ -66,12 +68,11 @@ class Settings:
             self.resize()
         pygame.display.update()
 
-        
-   
-       
+
 def get_font(size: int):  # Returns Press-Start-2P in the desired size
     font = os.path.join(os.path.dirname(__file__), 'assets/fonts/font.ttf')
     return pygame.font.Font(font, int(size))
+
 
 if __name__ == "__main__":
     pygame.init()
@@ -92,5 +93,3 @@ if __name__ == "__main__":
             elif gamestates["exit"]:
                 print("exit")
                 pygame.quit()
-        
-        
