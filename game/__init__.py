@@ -5,12 +5,13 @@ from settings import Settings
 from gameLoop import GameLoop
 from player import Player
 from gameLoop.map import Map
+from resolutions import Resolution
 
 
 class GameStates:
     def __init__(self) -> None:
         self.gameState = "menu"
-        self.gameStateList = ["menu", "game",
+        self.gameStateList = ["menu", "game", "resolution",
                               "pause", "settings", "credits", "exit"]
 
     def getState(self):
@@ -32,6 +33,7 @@ clock = pygame.time.Clock()
 gameStates = GameStates()
 menu = MenuClass(800, 600, screen, gameStates)
 settings = Settings(800, 600, screen, gameStates)
+resolution = Resolution(800, 600, screen, gameStates)
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py
@@ -41,7 +43,7 @@ while gameStates.getState() != "exit":
                 gameStates.setState("exit")
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    pygame.display.set_mode((200, 300))
+                    gameStates.setState("game")
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
@@ -53,17 +55,31 @@ while gameStates.getState() != "exit":
             if event.type == pygame.QUIT:
                 gameStates.setState("exit")
             else:
-                settings .settingsLoop(event, pygame.mouse.get_pos())
+                settings.settingsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
         # pygame.display.update()
-    if gameStates.gameState() == "game":
-        map = Map("game\\assets\\map.mp", "game\\assets\\Tiles\\tilemap.png")
-        player = Player(screen, "game\\assets\\player.png", map)
+    while gameStates.getState() == "resolution":
+        # Path: game\settings.py
+        # This is where the settings code will go
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameStates.setState("exit")
+            else:
+                resolution.settingsLoop(event, pygame.mouse.get_pos())
+        clock.tick(60)
+    if gameStates.getState() == "game":
+        map = Map("game\\assets\\maps\\map1.mp",
+                  "game\\assets\\Tiles\\tilemap.png")
+        player = Player(screen, "game\\assets\\player\\player.png", map)
         while gameStates.getState() == "game":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameStates.setState("exit")
                 player.handleEvent(event)
+            screen.fill((70, 0, 70))
+            player.update()
+            pygame.display.update()
+            clock.tick(60)
 
 
 pygame.quit()

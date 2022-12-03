@@ -2,13 +2,12 @@ import pygame
 
 
 class Player:
-    def __init__(self, screen, spriteSheet) -> None:
+    def __init__(self, screen, spriteSheet, map) -> None:
         """
         Basic player class
         screen is the screen to draw to
-        spriteSheet1 is the sprite sheet for the player in discharged state
-        spriteSheet2 is the sprite sheet for the player in charged state"""
-        # TODO UPDATE FOR TWO CHARGED AND NOT CHARGED STATES
+        spriteSheet1 is the sprite sheet for the player"""
+        self.map = map
         self.screen = screen
         self.state = "idle"
         self.sprite_sheet = pygame.image.load(spriteSheet).convert_alpha()
