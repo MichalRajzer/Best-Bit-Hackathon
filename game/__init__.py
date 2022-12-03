@@ -43,10 +43,12 @@ gameStates = GameStates()
 menu = MenuClass(size_x, size_y, screen, gameStates)
 settings = Settings(size_x, size_y, screen, gameStates)
 resolution = Resolution(size_x, size_y, screen, gameStates)
-mixer.init()
-mixer.music.load("game//assets//sounds//jiglr - Odyssey.mp3")
-mixer.music.play(-1)
-mixer.music.set_volume(1)
+if gameStates.getState() != "game":
+    mixer.music.load("game/assets/sounds/jiglr - Odyssey.mp3")
+    mixer.music.play(-1)
+    mixer.music.set_volume(1)
+else:
+    mixer.music.stop
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py
@@ -55,8 +57,9 @@ while gameStates.getState() != "exit":
             if event.type == pygame.QUIT:
                 gameStates.setState("exit")
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    gameStates.setState("game")
+                # if event.key == pygame.K_SPACE:
+                #     gameStates.setState("game")
+                pass
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
@@ -82,10 +85,9 @@ while gameStates.getState() != "exit":
         clock.tick(60)
 
     if gameStates.getState() == "game":
-        map = Map("game\\assets\\maps\\map2.mp",
+        map = Map("game\\assets\\maps\\map1.mp",
                   "game\\assets\\Tiles\\tilemap.png")
-        player = Player(screen, "game\\assets\\player\\player.png", map, {"Left": pygame.K_a, "Right": pygame.K_d, "Jump": pygame.K_w,
-                                                                          "Dash": pygame.K_SPACE, "Menu": pygame.K_ESCAPE})
+        player = Player(screen, "game\\assets\\player\\player.png", map)
         mixer.music.stop()
         while gameStates.getState() == "game":
             for event in pygame.event.get():

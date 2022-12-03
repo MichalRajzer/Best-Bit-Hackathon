@@ -53,26 +53,38 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                 self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
+
         collisions = pygame.sprite.spritecollide(
             self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
         while collisions:
+            if pygame.sprite.spritecollide(self, self.map.hazardous, False):
+                self.alive = False
+                self.currentAnimation = ["death", 0, 1, 0, 10]
+                return
             self.Vy = 0
             self.mapY += 1 * self.yDir
             self.physicsY += 1 * self.yDir
             self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                     self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
             collisions = pygame.sprite.spritecollide(
-                self, self.map.colliders, False)
+                self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
+
         self.mapX -= self.Vx * delta * self.xDir
         self.physicsX -= self.Vx * delta * self.xDir
+        collisions = pygame.sprite.spritecollide(
+            self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
         while collisions:
+            if pygame.sprite.spritecollide(self, self.map.hazardous, False):
+                self.alive = False
+                self.currentAnimation = ["death", 0, 1, 0, 10]
+                return
             self.Vx = 0
             self.mapX += 1 * self.xDir
             self.physicsX += 1 * self.xDir
             self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                     self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
             collisions = pygame.sprite.spritecollide(
-                self, self.map.colliders, False)
+                self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
 
     def update(self):
         """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
@@ -97,11 +109,11 @@ class Player(pygame.sprite.Sprite):
             pygame.draw.rect(self.screen, (0, 255, 0), tile.rect)
         #
         for event in self.events:
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and self.alive:
                 if event.key == self.keybinds["Jump"] and self.currentAnimation[0] != "jump":
                     self.pressedKeys.append("w")
-                    self.currentAnimation = [
-                        "jump", 0,  self.currentAnimation[2], 0, 5]
+                    # self.currentAnimation = [
+                    #     "jump", 0,  self.currentAnimation[2], 0, 5]
                     self.Vy = -500
                     self.physicsY += 20
                     self.mapY += 20
@@ -128,7 +140,7 @@ class Player(pygame.sprite.Sprite):
                 #     self.currentAnimation = [
                 #         "death", 0, self.currentAnimation[2], 0, 20]
                 #     self.currentAnimation[1] = 0
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and self.alive:
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 0, 10]
             elif event.type == pygame.KEYUP:
@@ -150,16 +162,18 @@ class Player(pygame.sprite.Sprite):
                     self.currentAnimation = ["default",
                                              0, self.currentAnimation[2], 0, 1]
         # self.gravity(1/60)
-        for key in self.pressedKeys:
-            if key == self.keybinds["Left"]:
-                self.xDir = -1
-                self.Vx = 200
-            elif key == self.keybinds["Right"]:
-                self.xDir = 1
-                self.Vx = 200
-            elif key == self.keybinds["Dash"]:
-                self.Vx = 1000
-        self.calculatePosition(1/60)
+        if self.alive:
+            for key in self.pressedKeys:
+                if key == self.keybinds["Left"]:
+                    self.xDir = -1
+                    self.Vx = 200
+                elif key == self.keybinds["Right"]:
+                    self.xDir = 1
+                    self.Vx = 200
+                elif key == self.keybinds["Dash"]:
+                    self.Vx = 1000
+        if self.alive:
+            self.calculatePosition(1/60)
         self.events = []
 
     def handleEvent(self, event):
