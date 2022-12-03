@@ -13,7 +13,7 @@ class Settings:
 
         pygame.display.set_caption("Ba(TT)ery")
         self.dirname = os.path.dirname(__file__)
-        background = os.path.join(self.dirname, 'assets/background.png')
+        background = os.path.join(self.dirname, 'assets/background_menu.png')
         self.BG = pygame.image.load(background)
         button = os.path.join(self.dirname, 'assets/menu_button.png')
         self.button_image = pygame.image.load(button)
