@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 
 class Player(pygame.sprite.Sprite):
@@ -117,6 +118,7 @@ class Player(pygame.sprite.Sprite):
                     self.Vy = -500
                     self.physicsY += 20
                     self.mapY += 20
+                    mixer.Sound("game\\assets\\sounds\\jump.wav").play()
                 elif event.key == self.keybinds["Left"] and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.pressedKeys.append("a")
@@ -143,6 +145,7 @@ class Player(pygame.sprite.Sprite):
             elif event.type == pygame.MOUSEBUTTONDOWN and self.alive:
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 0, 10]
+                mixer.Sound("game\\assets\\sounds\\hit.wav").play()
             elif event.type == pygame.KEYUP:
                 try:
                     if event.key == self.keybinds["Left"]:
