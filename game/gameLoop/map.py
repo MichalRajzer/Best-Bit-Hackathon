@@ -70,6 +70,12 @@ class Map:
         #60 bridge long pilar top
         #61 bridge long pilar bottom
         #62 bridge no pilar
+        #63 long brick top left
+        #64 long brick top middle
+        #65 long brick top right
+        #66 long brick bottom left
+        #67 long brick bottom middle
+        #68 long brick bottom right
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
