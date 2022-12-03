@@ -62,8 +62,14 @@ class Map:
             self.screenY = int(data[0])
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
+            self.background = pygame.image.load(
+                "game\\assets\\maps\\bg_1.png")
+            # scale background to cover renderedImage
+            self.background = pygame.transform.scale(
+                self.background, (self.screenX*2, self.screenY*2))
             self.renderedImage = pygame.Surface(
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
+            self.renderedImage.blit(self.background, (0, 0))
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
                     if "|" in symbols:
