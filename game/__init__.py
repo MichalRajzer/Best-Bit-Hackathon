@@ -10,6 +10,7 @@ from resolutions import Resolution
 
 class GameStates:
     def __init__(self) -> None:
+
         self.gameState = "menu"
         self.gameStateList = ["menu", "game", "resolution",
                               "pause", "settings", "credits", "exit"]
@@ -27,13 +28,18 @@ class GameStates:
 
 # Path: game\__init__.py
 pygame.init()
+monitor_size = [pygame.display.Info().current_w,
+                    pygame.display.Info().current_h]
+
+size_x = monitor_size[0]*2/3
+size_y = monitor_size[1]*2/3
+screen = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 pygame.display.set_caption("My Game")
-screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 gameStates = GameStates()
-menu = MenuClass(800, 600, screen, gameStates)
-settings = Settings(800, 600, screen, gameStates)
-resolution = Resolution(800, 600, screen, gameStates)
+menu = MenuClass(size_x, size_y, screen, gameStates)
+settings = Settings(size_x, size_y, screen, gameStates)
+resolution = Resolution(size_x, size_y, screen, gameStates)
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py

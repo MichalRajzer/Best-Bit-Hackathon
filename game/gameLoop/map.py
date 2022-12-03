@@ -24,15 +24,17 @@ class Map:
         # 7 = basic tile with bottom left wall
         # 8 = basic tile with bottom wall
         # 9 = basic tile with bottom right wall
-        # 10 = special wall with top left wall
+        # 10 = special wall with top wall
         # 11 = special wall with top wall
         # 12 = special wall with top wall
-        # 13 = special wall with top wall
-        # 14 = special wall with top wall
-        # 15 = special wall with top right wall
-        # 16 = lower part of 13
-        # 17 = lower part of 15
-
+        # 13 = special wall with lincoln poster 1
+        # 14 = special wall with small nuclear poster
+        # 15 = special wall with big nuclear poster 1
+        # 16 = special wall with top wall
+        # 17 = special wall with top wall
+        # 18 = special wall with top wall
+        # 19 = special wall with lincoln poster 1
+        # 20 = special wall with top wall
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
@@ -74,6 +76,7 @@ class Tile(pygame.sprite.Sprite):
         self.y = y
         self.spriteSheet = spritesheet
         self.loadTexture(tileType)
+        self.rect = pygame.Rect(x, y, 32, 32)
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))

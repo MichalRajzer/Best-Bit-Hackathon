@@ -23,6 +23,7 @@ class GameStates:
 
 class MenuClass:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
+        
         """create menu class"""
         self.gamestates = gamestates
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -32,7 +33,7 @@ class MenuClass:
 
         pygame.display.set_caption("Ba(TT)ery")
         self.dirname = os.path.dirname(__file__)
-        background = os.path.join(self.dirname, 'assets/background_menu.png')
+        background = os.path.join(self.dirname, 'assets/bg_logo.png')
         self.BG = pygame.image.load(background)
         
         
@@ -45,16 +46,16 @@ class MenuClass:
         """resize all images"""
         self.size_x, self.size_y = self.SCREEN.get_size()
         self.font_size_menu = self.size_y/10
-        self.font_size_buttons = self.size_y/12
+        self.font_size_buttons = self.size_y/16
         self.BG = pygame.transform.scale(self.BG, (self.size_x, self.size_y))
         self.button_image = pygame.transform.scale(
-            self.button_image, (self.size_x/4, self.size_y/10))
+            self.button_image, (self.size_x*3/10, self.size_y*3/20))
 
-        self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*1/6, self.size_y*2/3),
+        self.PLAY_BUTTON = Button(self.button_image, pos=(self.size_x*5/28, self.size_y*8/15),
                                   text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="game")
-        self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/3),
+        self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*8/15),
                                      text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
-        self.QUIT_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
+        self.QUIT_BUTTON = Button(self.button_image, pos=(self.size_x*23/28, self.size_y*8/15),
                                   text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="exit")
 
         self.SCREEN.blit(self.BG, (0, 0))
@@ -107,7 +108,6 @@ if __name__ == '__main__':
 
     menu = MenuClass(size_x, size_y, SCREEN, state)
     while True:
-
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
         for event in pygame.event.get():
