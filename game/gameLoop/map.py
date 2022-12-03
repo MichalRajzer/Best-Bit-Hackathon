@@ -38,7 +38,7 @@ class Map:
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
             self.renderedImage = pygame.Surface(
-                (self.screenX, self.screenY))
+                (self.screenX, self.screenY), pygame.SRCALPHA, 32).convert_alpha()
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
                     if int(symbols) < 0:
