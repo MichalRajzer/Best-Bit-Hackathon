@@ -86,6 +86,7 @@ class Player(pygame.sprite.Sprite):
                                     self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
             collisions = pygame.sprite.spritecollide(
                 self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
+        print(self.physicsX, self.physicsY)
 
     def update(self):
         """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
@@ -104,6 +105,7 @@ class Player(pygame.sprite.Sprite):
                     self.currentAnimation[1] = 0
         self.screen.blit(
             pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
+
         #
         ##pygame.draw.rect(self.screen, (255, 0, 0), self.rect)
         # for tile in self.map.colliders:
