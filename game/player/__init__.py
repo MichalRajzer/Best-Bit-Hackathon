@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = pygame.Rect(-self.physicsX, -self.physicsY, 64, 64)
         collisions = pygame.sprite.spritecollide(
-            self, self.map.map, False)
+            self, self.map.colliders, False)
         if collisions:
             print("collision")
 
@@ -64,7 +64,11 @@ class Player(pygame.sprite.Sprite):
                     self.currentAnimation[1] = 0
         self.screen.blit(
             pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
-
+        #
+        pygame.draw.rect(self.screen, (255, 0, 0), self.rect)
+        for tile in self.map.colliders:
+            pygame.draw.rect(self.screen, (0, 255, 0), tile.rect)
+        #
         for event in self.events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w and self.currentAnimation[0] != "jump":
