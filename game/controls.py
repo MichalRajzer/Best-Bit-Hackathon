@@ -7,6 +7,9 @@ from util import write_save
 class Controls:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates, save) -> None:
         """create settings class"""
+        self.save_file = save
+        self.curr_block = save["current_profile"]
+        self.controls = self.save_file["controls"][str(self.curr_block)]
         self.gamestates = gamestates
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         self.size_x = size_x
@@ -22,6 +25,21 @@ class Controls:
         self.button_image = pygame.image.load(button)
 
         self.resize()
+        self.setup()
+
+    def setup(self):
+        """ Setup menu """
+        self.selected = False
+        self.cursor_dict = {}
+        self.font = get_font(self.font_size_buttons)
+        self.curr_index = 0
+        i = 0
+        for control in self.controls:
+            self.cursor_dict[i] = control
+            i += 1
+        self.cursor_dict[i] = "Set"
+    
+
 
     def resize(self):
         """resize all images"""

@@ -1,6 +1,7 @@
 import pygame
 import sys
 from button import Button
+from pygame import mixer
 import os
 
 
@@ -23,7 +24,6 @@ class GameStates:
 
 class MenuClass:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
-        
         """create menu class"""
         self.gamestates = gamestates
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -83,6 +83,7 @@ class MenuClass:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             print("click")
+            self.PLAY_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.OPTIONS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
             self.QUIT_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:

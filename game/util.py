@@ -22,9 +22,9 @@ def create_save():
     new_save = {
         "controls": {
             "0" : {"Left": pygame.K_a, "Right": pygame.K_d, "Jump": pygame.K_w,
-                    "Dash": pygame.K_SPACE, "Stop": pygame.K_ESCAPE},
+                    "Dash": pygame.K_SPACE, "Menu": pygame.K_ESCAPE},
             "1" : {"Left": pygame.K_a, "Right": pygame.K_d, "Jump": pygame.K_w,
-                    "Dash": pygame.K_SPACE, "Stop": pygame.K_ESCAPE},
+                    "Dash": pygame.K_SPACE, "Menu": pygame.K_ESCAPE},
             }, 
             "current _profile": 0}
     return new_save
