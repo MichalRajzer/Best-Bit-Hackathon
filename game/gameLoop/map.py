@@ -6,7 +6,8 @@ class Map:
         self.file = file
         self.respawnPoint = (0, 0)
         self.spriteSheet = SpriteSheet(spriteMap)
-        self.map = []
+        self.colliders = []
+        self.decorative = []
         self.renderedImage = None
         self.loadMap(self.file)
         self.render()
@@ -24,37 +25,46 @@ class Map:
         # 7 = basic tile with bottom left wall
         # 8 = basic tile with bottom wall
         # 9 = basic tile with bottom right wall
-        # 10 = special wall with top left wall
+        # 10 = special wall with top wall
         # 11 = special wall with top wall
         # 12 = special wall with top wall
-        # 13 = special wall with top wall
-        # 14 = special wall with top wall
-        # 15 = special wall with top right wall
-        # 16 = lower part of 13
-        # 17 = lower part of 15
-
+        # 13 = special wall with lincoln poster 1
+        # 14 = special wall with small nuclear poster
+        # 15 = special wall with big nuclear poster 1
+        # 16 = special wall with middle wall
+        # 17 = special wall with middle wall
+        # 18 = special wall with middle wall
+        # 19 = special wall with lincoln poster 1
+        # 20 = special wall with middle wall
+        # 21 = special wall with big nuclear poster 2
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
-                           13: [96, 128], 14: [128, 128], 15: [160, 128], 16: [96, 160], 17: [160, 160]}
+                           13: [96, 128], 14: [128, 128], 15: [160, 128], 16: [0, 160], 17: [32, 160],
+                           18: [64, 160], 19: [96, 160], 20: [128, 160], 21: [160, 160]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
             self.renderedImage = pygame.Surface(
-                (self.screenX, self.screenY), pygame.SRCALPHA, 32).convert_alpha()
+                (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
                     if int(symbols) < 0:
                         pass
                     else:
-                        print(x*32, y*32, tileInSpriteMap[int(symbols)])
-                        self.map.append(
-                            Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
+                        if int(symbols) in [0]:
+                            self.decorative.append(
+                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                        else:
+                            self.colliders.append(
+                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
 
     def render(self):
-        for tile in self.map:
+        for tile in self.colliders:
+            tile.draw(self.renderedImage)
+        for tile in self.decorative:
             tile.draw(self.renderedImage)
 
     def getMap(self):
@@ -74,10 +84,11 @@ class Tile(pygame.sprite.Sprite):
         self.y = y
         self.spriteSheet = spritesheet
         self.loadTexture(tileType)
-        self.rect = pygame.Rect(x, y, 32, 32)
+        self.rect = pygame.Rect(x, y, 64, 64)
 
     def draw(self, surface):
-        surface.blit(self.image, (self.x, self.y))
+        surface.blit(pygame.transform.scale(
+            self.image, (64, 64)), (self.x, self.y))
 
     def loadTexture(self, tileType):
         self.image = self.spriteSheet.getSprite(tileType)
