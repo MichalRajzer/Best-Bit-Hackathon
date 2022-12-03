@@ -1,12 +1,11 @@
-import pygame
 import sys
+import pygame
 from mainmenu import MenuClass
 from settings import Settings
 from gameLoop import GameLoop
 from player import Player
 from gameLoop.map import Map
 from resolutions import Resolution
-from controls import Controls
 from util import load_save, reset_keys, write_save
 from pygame import mixer
 
@@ -15,8 +14,8 @@ class GameStates:
     def __init__(self) -> None:
         self.level = 1
         self.gameState = "menu"
-        self.gameStateList = ["menu", "game", "resolution",
-                              "pause", "settings", "controls", "credits", "exit"]
+        self.gameStateList = ["menu", "game", "resolution"
+                              "pause", "settings", "credits", "exit"]
 
     def getState(self):
         return self.gameState
@@ -86,23 +85,13 @@ while gameStates.getState() != "exit":
                 resolution.resolutionsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
 
-    # while gameStates.getState() == "controls":
-    #     # Path: game\controls.py
-    #     # This is where the controls code will go
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             gameStates.setState("exit")
-    #         else:
-    #             controls.controlsLoop(event, pygame.mouse.get_pos())
-    #     clock.tick(60)
-
     if gameStates.getState() == "game":
         mixer.music.stop()
         background = pygame.image.load(
-            "game\\assets\\maps\\bg_2.png").convert()
-        map = Map("game\\assets\\maps\\map2.mp",
-                  "game\\assets\\Tiles\\tilemap.png")
-        player = Player(screen, "game\\assets\\player\\player.png", map, {
+            "game//assets//maps//bg_2.png").convert()
+        map = Map("game//assets//maps//map2.mp",
+                  "game//assets//Tiles//tilemap.png")
+        player = Player(screen, "game//assets//player//player.png", map, {
                         "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
         while gameStates.getState() == "game":
             for event in pygame.event.get():
