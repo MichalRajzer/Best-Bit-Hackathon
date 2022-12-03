@@ -52,18 +52,18 @@ class Map:
         # 32-33-34 - water puddle
         # 35-36-37-38-39-40 -Press space to dash
         # 41-42-43-44 -Avoid Water!!
-        #45 long gray tile top left
-        #46 long gray tile top middle
-        #47 long gray tile top right
-        #48 long gray tile bottom left
-        #49 long gray tile bottom middle
-        #50 long gray tile bottom right
-        #51 short gray tile left
-        #52 short gray tile middle
-        #53 short gray tile right
-        #54 very long gray tile left
-        #55 very long gray tile middle
-        #56 very lon gray tile right
+        # 45 long gray tile top left
+        # 46 long gray tile top middle
+        # 47 long gray tile top right
+        # 48 long gray tile bottom left
+        # 49 long gray tile bottom middle
+        # 50 long gray tile bottom right
+        # 51 short gray tile left
+        # 52 short gray tile middle
+        # 53 short gray tile right
+        # 54 very long gray tile left
+        # 55 very long gray tile middle
+        # 56 very lon gray tile right
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
@@ -73,17 +73,23 @@ class Map:
                            28: [192, 0], 29: [192, 32], 30: [192, 64], 31: [544, 0], 32: [448, 512], 33: [480, 512], 34: [512, 512],
                            35: [384, 256], 36: [416, 256], 37: [448, 256], 38: [480, 256], 39: [512, 256], 40: [544, 256],
                            41: [448, 288], 42: [480, 288], 43: [512, 288], 44: [544, 288], 45: [320, 0], 46: [352, 0], 47: [416, 0], 48: [320, 32], 49: [352, 32],
-                           50: [416, 32], 51: [320, 96], 52: [352, 96], 53: [384, 192], 54: [320, 224], 55: [352, 192], 56: [352,224]}
+                           50: [416, 32], 51: [320, 96], 52: [352, 96], 53: [384, 192], 54: [320, 224], 55: [352, 192], 56: [352, 224]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
-            self.background = pygame.image.load(
-                "game\\assets\\maps\\bg_2.png")
-            # scale background to cover renderedImage
+            self.background = int(data[4])
+            if self.background == 1:
+                self.background = pygame.image.load(
+                    "game\\assets\\maps\\bg_1.png")
+            if self.background == 2:
+                self.background = pygame.image.load(
+                    "game\\assets\\maps\\bg_2.png")
+            # scale background to cover screen
             self.background = pygame.transform.scale(
-                self.background, (self.screenX*2, self.screenY*2))
+                self.background, (self.screenX*2, self.background.get_size()[1]*self.screenX*2/self.background.get_size()[0]))
+
             self.renderedImage = pygame.Surface(
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             self.renderedImage.blit(self.background, (0, 0))
