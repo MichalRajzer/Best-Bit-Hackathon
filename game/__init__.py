@@ -1,4 +1,5 @@
-import sys, pygame
+import sys
+import pygame
 from mainmenu import MenuClass
 from settings import Settings
 from gameLoop import GameLoop

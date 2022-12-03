@@ -112,7 +112,7 @@ class Map:
                         for symbol in symbols.split("|"):
                             if int(symbol) == -1:
                                 self.teleporter = Tile(
-                                    tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet)
+                                    tileInSpriteMap[1], x*64, y*64, self.spriteSheet)
                             else:
                                 if int(symbol) in [0]:
                                     self.decorative.append(
