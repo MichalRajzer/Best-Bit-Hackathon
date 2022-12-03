@@ -17,36 +17,48 @@ class Player:
         self.animations = {key: None
                            for key in self.listOfAnimations}
         # [animation, current frame, direction, charged, frames per frame]
-        self.currentAnimation = ["jump", 0,  1, 0, 1]
+        self.currentAnimation = ["walk", 0,  1, 0, 10]
         self.getAllSprites()
         # print(self.animations)
         self.x = self.screen.get_width() / 2
         self.y = self.screen.get_height() / 2
         self.frameCounter = 0
+        self.events = []
 
-    def update(self, events):
+    def update(self):
         self.frameCounter += 1
         if self.frameCounter == self.currentAnimation[4]:
             self.frameCounter = 0
             self.currentAnimation[1] += 1
+            print(len(self.animations[self.currentAnimation[0]][0][0]))
             if self.currentAnimation[1] >= len(self.animations[self.currentAnimation[0]][0][0]):
+                if self.currentAnimation[0] == "attack":
+                    self.currentAnimation[0] = "default"
                 self.currentAnimation[1] = 0
         self.screen.blit(
             self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (self.x, self.y))
-        # for event in events:
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_w:
-        #             self.currentAnimation = [
-        #                 "jump", 0,  self.currentAnimation[2], 0]
-        #         elif event.key == pygame.K_a:
-        #             self.currentAnimation = ["walk", 0, 0, 0]
-        #         elif event.key == pygame.K_d:
-        #             self.currentAnimation = ["walk", 0, 1, 0]
-        #     elif event.type == pygame.KEYUP:
-        #         self.currentAnimation = ["default",
-        #                                  0, self.currentAnimation[2], 0]
+        for event in self.events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w and self.currentAnimation[0] != "jump":
+                    self.currentAnimation = [
+                        "jump", 0,  self.currentAnimation[2], 0, 5]
+                elif event.key == pygame.K_a and self.currentAnimation[0] != "walk":
+                    print("walk")
+                    self.currentAnimation = ["walk", 0, 0, 0, 10]
+                elif event.key == pygame.K_d and self.currentAnimation[0] != "walk":
+                    self.currentAnimation = ["walk", 0, 1, 0, 10]
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self.currentAnimation = ["attack", 0, 1, 0, 10]
+            elif event.type == pygame.KEYUP and self.state != "falling":
+                print("idle")
+                self.frameCounter = 0
+                self.currentAnimation = ["default",
+                                         0, self.currentAnimation[2], 0, 1]
+        self.events = []
 
-    # def draw(self, screen, x=self.):
+    def handleEvent(self, event):
+        self.events.append(event)
+        # print(event)
 
     def getAllSprites(self):
         for animation in self.listOfAnimations:
@@ -135,7 +147,6 @@ if __name__ == '__main__':
     animation = ["death", 3]
     while True:
         screen.fill((70, 0, 70))
-        player.update(1)
         #playerImg1 = player.animations[animation[0]][0][0][i]
         #playerImg2 = player.animations[animation[0]][1][0][i]
         #playerImg3 = player.animations[animation[0]][0][1][i]
@@ -151,13 +162,12 @@ if __name__ == '__main__':
         #i += 1
         # if i == animation[1]:
         #    i = 0
-        pygame.display.flip()
-        clock.tick(4)
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                # sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    exit()
+            else:
+                player.handleEvent(event)
+
+        player.update()
+        pygame.display.flip()
