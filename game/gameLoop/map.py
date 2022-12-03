@@ -30,11 +30,13 @@ class Map:
         # 13 = special wall with top wall
         # 14 = special wall with top wall
         # 15 = special wall with top right wall
+        # 16 = lower part of 13
+        # 17 = lower part of 15
 
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
-                           13: [96, 128], 14: [128, 128], 15: [160, 128]}
+                           13: [96, 128], 14: [128, 128], 15: [160, 128], 16: [96, 160], 17: [160, 160]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
