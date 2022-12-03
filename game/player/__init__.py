@@ -1,7 +1,7 @@
 import pygame
 
 
-class Player:
+class Player(pygame.sprite.Sprite):
     def __init__(self, screen, spriteSheet, map) -> None:
         """
         Basic player class
@@ -21,10 +21,31 @@ class Player:
         # print(self.animations)
         self.x = self.screen.get_width() / 2
         self.y = self.screen.get_height() / 2
-        self.mapX = map.respawnPoint[0]
-        self.mapY = map.respawnPoint[1]
+        self.mapX = map.respawnPoint[0] + self.x
+        self.mapY = map.respawnPoint[1] + self.y
+        self.physicsX = map.respawnPoint[0]
+        self.physicsY = map.respawnPoint[1]
         self.frameCounter = 0
         self.events = []
+        self.Vy = 0
+        self.Vx = 0
+        self.rect = pygame.Rect(self.physicsX+32, self.physicsY+32, 64, 64)
+
+    def gravity(self, delta):
+        #self.Vy += 1000*delta
+        pass
+
+    def calculatePosition(self, delta):
+        self.mapY -= self.Vy * delta
+        self.mapX -= self.Vx * delta
+        self.physicsY -= self.Vy * delta
+        self.physicsX -= self.Vx * delta
+
+        self.rect = pygame.Rect(-self.physicsX, -self.physicsY, 64, 64)
+        collisions = pygame.sprite.spritecollide(
+            self, self.map.map, False)
+        if collisions:
+            print("collision")
 
     def update(self):
         """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
@@ -43,6 +64,7 @@ class Player:
                     self.currentAnimation[1] = 0
         self.screen.blit(
             pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
+
         for event in self.events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w and self.currentAnimation[0] != "jump":
@@ -51,9 +73,11 @@ class Player:
                 elif event.key == pygame.K_a and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.currentAnimation = ["walk", 0, 0, 0, 10]
+                    self.Vx = -100
                     self.currentAnimation[1] = 0
                 elif event.key == pygame.K_d and self.currentAnimation[0] != "walk":
                     self.currentAnimation = ["walk", 0, 1, 0, 10]
+                    self.Vx = 100
                     self.currentAnimation[1] = 0
                 elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
                     self.currentAnimation = [
@@ -62,17 +86,15 @@ class Player:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 0, 10]
-            elif event.type == pygame.KEYUP and self.state != "walk":
-                print("idle")
-                self.frameCounter = 0
-                self.currentAnimation = ["default",
-                                         0, self.currentAnimation[2], 0, 1]
-        if self.currentAnimation[0] == "walk":
-            if self.currentAnimation[2] == 0:
-                self.mapX += 1
-            else:
-                self.mapX -= 1
-
+            elif event.type == pygame.KEYUP:
+                if self.currentAnimation[0] == "walk":
+                    self.Vx = 0
+                    print("idle")
+                    self.frameCounter = 0
+                    self.currentAnimation = ["default",
+                                             0, self.currentAnimation[2], 0, 1]
+        self.gravity(1/60)
+        self.calculatePosition(1/60)
         self.events = []
 
     def handleEvent(self, event):
