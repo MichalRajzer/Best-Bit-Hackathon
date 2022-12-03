@@ -1,4 +1,4 @@
-import pygame
+import pygame, os
 
 
 class Map:
@@ -117,7 +117,10 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((800, 600))
     clock = pygame.time.Clock()
     running = True
-    map = Map("game\\gameLoop\\testmap.mp", "game\\assets\\Tiles\\tilemap.png")
+    dirname = os.path.dirname(__file__)
+    testmap = os.path.join(dirname, 'testmap.mp')
+    titlemap = os.path.join(dirname, '../assets/Tiles/tilemap.png')
+    map = Map(testmap, titlemap)
     mapX = 0
     mapY = 0
     while running:

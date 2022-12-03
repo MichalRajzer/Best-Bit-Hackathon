@@ -32,7 +32,7 @@ class Settings:
             self.button_image, (self.size_x*5/10, self.size_y*3/20))
 
         self.CONTROLS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*1/3),
-                                  text_input="CONTROLS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="controls")
+                                  text_input="CONTROLS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="controls")
         self.RESOLUTION_BUTTON = Button(self.button_image_res, pos=(self.size_x/2, self.size_y*3/6),
                                      text_input="RESOLUTIONS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="resolution")
         self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*5/6),
