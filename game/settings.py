@@ -1,6 +1,6 @@
 import pygame, os 
 from button import Button
-class settings:
+class Settings:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
         """create settings class"""
         self.gamestates = gamestates
@@ -31,35 +31,35 @@ class settings:
                                   text_input="PLAY", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="game")
         self.OPTIONS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/3),
                                      text_input="OPTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
-        self.QUIT_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
-                                  text_input="QUIT", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="exit")
+        self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x*5/6, self.size_y*2/3),
+                                  text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="menu")
 
         self.SCREEN.blit(self.BG, (0, 0))
 
         self.OPTIONS_BUTTON.update(self.SCREEN)
         self.PLAY_BUTTON.update(self.SCREEN)
-        self.QUIT_BUTTON.update(self.SCREEN)
+        self.BACK_BUTTON.update(self.SCREEN)
 
     def update(self):
         """ Update menu """
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         self.PLAY_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.OPTIONS_BUTTON.changeColor(self.MENU_MOUSE_POS)
-        self.QUIT_BUTTON.changeColor(self.MENU_MOUSE_POS)
+        self.BACK_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
 
     def settingsLoop(self, event, mouse_pos):
         """ Odpowiada za klikanie """
         self.update()
         self.MENU_MOUSE_POS = mouse_pos
-        for button in [self.PLAY_BUTTON, self.OPTIONS_BUTTON, self.QUIT_BUTTON]:
+        for button in [self.PLAY_BUTTON, self.OPTIONS_BUTTON, self.BACK_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             print("click")
             self.OPTIONS_BUTTON.checkForInput(self.MENU_MOUSE_POS)
-            self.QUIT_BUTTON.checkForInput(self.MENU_MOUSE_POS)
+            self.BACK_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:
             self.resize()
         pygame.display.update()
@@ -89,4 +89,3 @@ if __name__ == "__main__":
             elif gamestates["exit"]:
                 print("exit")
                 pygame.quit()
-                exit()

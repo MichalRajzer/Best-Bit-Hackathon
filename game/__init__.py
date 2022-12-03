@@ -1,13 +1,14 @@
 import pygame
 import sys
 from mainmenu import MenuClass
+from settings import Settings
 
 
 class GameStates:
     def __init__(self) -> None:
         self.gameState = "menu"
         self.gameStateList = ["menu", "game",
-                              "pause", "settings", "credits", "exit"]
+                              "pause", "settings", "credits", "exit", "back"]
 
     def getState(self):
         return self.gameState
@@ -40,6 +41,16 @@ while gameStates.getState() != "exit":
                     inGame = True
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
+        clock.tick(60)
+        # pygame.display.update()
+    while gameStates.getState() == "settings":
+        # Path: game\settings.py
+        # This is where the settings code will go
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameStates.setState("exit")
+            else:
+                menu.settingsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
         # pygame.display.update()
     while gameStates.getState() == "inGame":
