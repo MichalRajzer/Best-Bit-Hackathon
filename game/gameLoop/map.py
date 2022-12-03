@@ -8,6 +8,7 @@ class Map:
         self.spriteSheet = SpriteSheet(spriteMap)
         self.colliders = []
         self.decorative = []
+        self.hazardous = []
         self.renderedImage = None
         self.loadMap(self.file)
         self.render()
@@ -62,20 +63,40 @@ class Map:
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
-                    if int(symbols) < 0:
-                        pass
+                    if "|" in symbols:
+                        for symbol in symbols.split("|"):
+                            if int(symbol) < 0:
+                                pass
+                            else:
+                                if int(symbol) in [0]:
+                                    self.decorative.append(
+                                        Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
+                                elif int(symbol) in []:
+                                    self.hazardous.append(
+                                        Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
+                                else:
+                                    self.colliders.append(
+                                        Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
                     else:
-                        if int(symbols) in [0]:
-                            self.decorative.append(
-                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                        if int(symbols) < 0:
+                            pass
                         else:
-                            self.colliders.append(
-                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                            if int(symbols) in [0]:
+                                self.decorative.append(
+                                    Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                            elif int(symbols) in []:
+                                self.hazardous.append(
+                                    Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                            else:
+                                self.colliders.append(
+                                    Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
 
     def render(self):
         for tile in self.colliders:
             tile.draw(self.renderedImage)
         for tile in self.decorative:
+            tile.draw(self.renderedImage)
+        for tile in self.hazardous:
             tile.draw(self.renderedImage)
 
     def getMap(self):
