@@ -95,7 +95,7 @@ while gameStates.getState() != "exit":
                 if event.type == pygame.QUIT:
                     gameStates.setState("exit")
                 player.handleEvent(event)
-            screen.fill((70, 0, 70))
+            screen.fill((0, 0, 0))
             mapImg = player.map.getMap()
             screen.blit(mapImg, (player.mapX, player.mapY))
             player.update()

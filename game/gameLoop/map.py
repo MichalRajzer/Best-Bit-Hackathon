@@ -177,7 +177,7 @@ if __name__ == '__main__':
                     mapY += 16
                 elif event.key == pygame.K_DOWN:
                     mapY -= 16
-        screen.fill((80, 80, 0))
+        screen.fill((0, 0, 0))
         # map.map[2][1].draw(screen)
         # screen.blit(map.spriteSheet.get_sprite(32, 0, 32, 32), (32, 0))
         mapImg = map.scaledToHeight(600)

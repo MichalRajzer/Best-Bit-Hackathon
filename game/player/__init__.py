@@ -271,7 +271,7 @@ if __name__ == '__main__':
     # animation = ["attack", 2]
     animation = ["death", 3]
     while True:
-        screen.fill((70, 0, 70))
+        screen.fill((0, 0, 0))
         #playerImg1 = player.animations[animation[0]][0][0][i]
         #playerImg2 = player.animations[animation[0]][1][0][i]
         #playerImg3 = player.animations[animation[0]][0][1][i]
