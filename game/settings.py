@@ -40,8 +40,8 @@ class Settings:
 
         self.VOLUME_BUTTON = volume_button(self.SCREEN, pos=(self.size_x/2, self.size_y*5/8), text_input="VOLUME", image=self.button_image, font=get_font(self.font_size_menu),base_color="#d7fcd4", value=0)
         self.BUTTON_MUSIC = volume_button(self.SCREEN,pos=(self.size_x*3/4, self.size_y*15/24), image=self.button_music,text_input= " ",base_color="#d7fcd4",font=get_font(self.font_size_menu), value= 0)
-        self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= 1)
-        self.VOLUME_DOWN = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*9/12),image = self.arrow_down, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= -1)            
+        self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "UP")
+        self.VOLUME_DOWN = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*9/12),image = self.arrow_down, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "DOWN")            
         self.CONTROLS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/12),
                                   text_input="CONTROLS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="controls")
         self.RESOLUTION_BUTTON = Button(self.button_image_res, pos=(self.size_x/2, self.size_y*9/24),
