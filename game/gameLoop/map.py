@@ -1,4 +1,5 @@
-import pygame, os
+import pygame
+import os
 
 
 class Map:
@@ -47,7 +48,7 @@ class Map:
         # 28 = skyscraper wall right
         # 29 = skyscraper wall right
         # 30 = skyscraper wall right
-        # 31 = level label
+        # 31 = 1 level label
         # 32-33-34 - water puddle
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
@@ -83,7 +84,7 @@ class Map:
                         if int(symbols) < 0:
                             pass
                         else:
-                            if int(symbols) in [0]:
+                            if int(symbols) in [0, 31]:
                                 self.decorative.append(
                                     Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
                             elif int(symbols) in [32, 33, 34]:
