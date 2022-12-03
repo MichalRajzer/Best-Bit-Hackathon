@@ -52,6 +52,14 @@ class Player:
             anim = self.parseAnimation(frames)
             self.animations["walk"] = [anim, None]
 
+        elif animation == "jump":
+            frames = [[320, 32, 32],
+                      [384, 32, 32], [448, 32, 32],
+                      [512, 32, 32], [576, 32, 32],
+                      [640, 32, 32]]
+            anim = self.parseAnimation(frames)
+            self.animations["jump"] = [anim, None]
+
     def parseAnimation(self, frames):
         leftAnimNotCharged = []
         leftAnimCharged = []
@@ -95,7 +103,10 @@ if __name__ == '__main__':
     # player.draw(screen)
     i = 0
     clock = pygame.time.Clock()
-    animation = ["default", 1]
+    # animation = ["default", 1]
+    # animation = ["walk", 4]
+    # animation = ["jump", 6]
+    # animation = ["run", 4]
     while True:
         screen.fill((70, 0, 70))
         playerImg1 = player.animations[animation[0]][0][0][0][i]
