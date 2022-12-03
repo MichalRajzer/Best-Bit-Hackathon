@@ -1,5 +1,6 @@
 import sys
 import pygame
+import os
 from mainmenu import MenuClass
 from settings import Settings
 from gameLoop import GameLoop
@@ -37,7 +38,11 @@ size_x = monitor_size[0]*2/3
 size_y = monitor_size[1]*2/3
 # controls = Controls()
 screen = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Ba(TT)ery")
+dirname = os.path.dirname(__file__)
+icon = os.path.join(dirname, 'assets/icon.png')
+pygame_icon = pygame.image.load(icon)
+pygame.display.set_icon(pygame_icon)
 clock = pygame.time.Clock()
 save = load_save()
 gameStates = GameStates()
