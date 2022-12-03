@@ -2,11 +2,12 @@ import pygame
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, screen, spriteSheet, map) -> None:
+    def __init__(self, screen, spriteSheet, map, keybinds) -> None:
         """
         Basic player class
         screen is the screen to draw to
         spriteSheet1 is the sprite sheet for the player"""
+        self.keybinds = keybinds
         self.xDir = 1
         self.yDir = 1
         self.map = map
@@ -37,6 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.physHeight = 64
         self.physHeightOffset = 0
         self.pressedKeys = []
+        self.alive = True
         self.rect = pygame.Rect(
             -self.physicsX+self.physWidthOffset, -self.physicsY+self.physHeightOffset, self.physWidth, self.physHeight)
 
@@ -52,7 +54,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                 self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
         collisions = pygame.sprite.spritecollide(
-            self, self.map.colliders, False)
+            self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
         while collisions:
             self.Vy = 0
             self.mapY += 1 * self.yDir
@@ -96,42 +98,50 @@ class Player(pygame.sprite.Sprite):
         #
         for event in self.events:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w and self.currentAnimation[0] != "jump":
+                if event.key == self.keybinds["Jump"] and self.currentAnimation[0] != "jump":
                     self.pressedKeys.append("w")
                     self.currentAnimation = [
                         "jump", 0,  self.currentAnimation[2], 0, 5]
                     self.Vy = -500
                     self.physicsY += 20
                     self.mapY += 20
-                elif event.key == pygame.K_a and self.currentAnimation[0] != "walk":
+                elif event.key == self.keybinds["Left"] and self.currentAnimation[0] != "walk":
                     print("walk")
                     self.pressedKeys.append("a")
                     self.currentAnimation = ["walk", 0, 0, 0, 10]
                     self.xDir = -1
                     self.Vx = 200
                     self.currentAnimation[1] = 0
-                elif event.key == pygame.K_d and self.currentAnimation[0] != "walk":
+                elif event.key == self.keybinds["Right"] and self.currentAnimation[0] != "walk":
                     self.pressedKeys.append("d")
                     self.currentAnimation = ["walk", 0, 1, 0, 10]
                     self.xDir = 1
                     self.Vx = 200
                     self.currentAnimation[1] = 0
-                elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
+                elif event.key == self.keybinds["Dash"] and self.currentAnimation[0] != "walk":
+                    self.pressedKeys.append("d")
                     self.currentAnimation = [
-                        "death", 0, self.currentAnimation[2], 0, 20]
+                        "run", 0, self.currentAnimation[2], 0, 10]
+                    self.Vx = 1000
                     self.currentAnimation[1] = 0
+                # elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
+                #     self.currentAnimation = [
+                #         "death", 0, self.currentAnimation[2], 0, 20]
+                #     self.currentAnimation[1] = 0
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 0, 10]
             elif event.type == pygame.KEYUP:
                 try:
-                    if event.key == pygame.K_a:
+                    if event.key == self.keybinds["Left"]:
                         self.pressedKeys.remove("a")
                         self.Vx = 0
-                    elif event.key == pygame.K_d:
+                    elif event.key == self.keybinds["Right"]:
                         self.pressedKeys.remove("d")
                         self.Vx = 0
-                    elif event.key == pygame.K_w:
+                    elif event.key == self.keybinds["Jump"]:
+                        self.pressedKeys.remove("w")
+                    elif event.key == self.keybinds["Dash"]:
                         self.pressedKeys.remove("w")
                 except ValueError:
                     pass
@@ -141,12 +151,14 @@ class Player(pygame.sprite.Sprite):
                                              0, self.currentAnimation[2], 0, 1]
         # self.gravity(1/60)
         for key in self.pressedKeys:
-            if key == "a":
+            if key == self.keybinds["Left"]:
                 self.xDir = -1
                 self.Vx = 200
-            elif key == "d":
+            elif key == self.keybinds["Right"]:
                 self.xDir = 1
                 self.Vx = 200
+            elif key == self.keybinds["Dash"]:
+                self.Vx = 1000
         self.calculatePosition(1/60)
         self.events = []
 
