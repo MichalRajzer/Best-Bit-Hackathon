@@ -1,12 +1,15 @@
-import pygame
-import os
+import pygame, os
 from button import Button
+from util import write_save
 
-
-class Resolution:
+class Controls:
     def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
         """create settings class"""
         self.gamestates = gamestates
+        #self.save_file = save
+        #self.curr_block = save["curr_profile"]
+        #self.controls = self.save_file["controls"][str(self.curr_block)]
+        #self.setup()
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
         self.size_x = size_x
         self.size_y = size_y
@@ -55,7 +58,7 @@ class Resolution:
         self.BACK_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
 
-    def resolutionLoop(self, event, mouse_pos):
+    def controlsLoop(self, event, mouse_pos):
         """ Odpowiada za klikanie """
         self.update()
         self.MENU_MOUSE_POS = mouse_pos

@@ -6,13 +6,14 @@ from gameLoop import GameLoop
 from player import Player
 from gameLoop.map import Map
 from resolutions import Resolution
-
+from util import load_save, reset_keys
+from controls import Controls
 
 class GameStates:
     def __init__(self) -> None:
 
         self.gameState = "menu"
-        self.gameStateList = ["menu", "game", "resolution",
+        self.gameStateList = ["menu", "game", "resolution", "controls",
                               "pause", "settings", "credits", "exit"]
 
     def getState(self):
@@ -40,6 +41,7 @@ gameStates = GameStates()
 menu = MenuClass(size_x, size_y, screen, gameStates)
 settings = Settings(size_x, size_y, screen, gameStates)
 resolution = Resolution(size_x, size_y, screen, gameStates)
+controls = Controls(size_x, size_y, screen, gameStates)
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py
@@ -71,8 +73,18 @@ while gameStates.getState() != "exit":
             if event.type == pygame.QUIT:
                 gameStates.setState("exit")
             else:
-                resolution.settingsLoop(event, pygame.mouse.get_pos())
+                resolution.resolutionLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
+        while gameStates.getState() == "controls":
+            # Path: game\settings.py
+            # This is where the settings code will go
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameStates.setState("exit")
+                else:
+                    controls.controlsLoop(event, pygame.mouse.get_pos())
+            clock.tick(60)
+            # pygame.display.update()
     if gameStates.getState() == "game":
         map = Map("game\\assets\\maps\\map1.mp",
                   "game\\assets\\Tiles\\tilemap.png")
