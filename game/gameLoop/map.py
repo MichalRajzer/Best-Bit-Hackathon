@@ -115,7 +115,7 @@ class Map:
 
             self.renderedImage = pygame.Surface(
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
-            self.renderedImage.blit(self.background, (0, 0))
+            # self.renderedImage.blit(self.background, (0, 0))
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
                     if "|" in symbols:

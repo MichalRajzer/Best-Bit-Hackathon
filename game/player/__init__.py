@@ -87,6 +87,10 @@ class Player(pygame.sprite.Sprite):
             collisions = pygame.sprite.spritecollide(
                 self, self.map.colliders, False) + pygame.sprite.spritecollide(self, self.map.hazardous, False)
         print(self.physicsX, self.physicsY)
+        if self.physicsX < self.map.respawnPoint[0] - self.map.screenX*2 - 50:
+            print("respawn now")
+        elif self.physicsY < self.map.respawnPoint[1] - self.map.screenY*2 - 50:
+            print("respawn now")
 
     def update(self):
         """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
