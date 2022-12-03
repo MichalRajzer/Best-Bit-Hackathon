@@ -2,12 +2,15 @@ import pygame
 import sys
 from mainmenu import MenuClass
 from settings import Settings
+from gameLoop import GameLoop
+from player import Player
+from gameLoop.map import Map
 
 
 class GameStates:
     def __init__(self) -> None:
         self.gameState = "menu"
-        self.gameStateList = ["menu", "game", 
+        self.gameStateList = ["menu", "game",
                               "pause", "settings", "credits", "exit"]
 
     def getState(self):
@@ -53,8 +56,12 @@ while gameStates.getState() != "exit":
                 settings .settingsLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
         # pygame.display.update()
-    while gameStates.getState() == "inGame":
-        pass
+    if gameStates.gameState() == "game":
+        player = Player(screen, "game\\assets\\player.png")
+        map = Map("")
+        while gameStates.getState() == "game":
+            pass
+
 
 pygame.quit()
 sys.exit()
