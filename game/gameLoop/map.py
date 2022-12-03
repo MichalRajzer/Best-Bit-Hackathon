@@ -46,7 +46,7 @@ class Map:
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
             self.renderedImage = pygame.Surface(
-                (self.screenX, self.screenY), pygame.SRCALPHA, 32).convert_alpha()
+                (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
                     if int(symbols) < 0:
@@ -54,10 +54,10 @@ class Map:
                     else:
                         if int(symbols) in [0]:
                             self.decorative.append(
-                                Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
+                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
                         else:
                             self.colliders.append(
-                                Tile(tileInSpriteMap[int(symbols)], x*32, y*32, self.spriteSheet))
+                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
 
     def render(self):
         for tile in self.colliders:
@@ -82,10 +82,11 @@ class Tile(pygame.sprite.Sprite):
         self.y = y
         self.spriteSheet = spritesheet
         self.loadTexture(tileType)
-        self.rect = pygame.Rect(x, y, 32, 32)
+        self.rect = pygame.Rect(x, y, 64, 64)
 
     def draw(self, surface):
-        surface.blit(self.image, (self.x, self.y))
+        surface.blit(pygame.transform.scale(
+            self.image, (64, 64)), (self.x, self.y))
 
     def loadTexture(self, tileType):
         self.image = self.spriteSheet.getSprite(tileType)
