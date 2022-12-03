@@ -13,7 +13,7 @@ class Settings:
 
         pygame.display.set_caption("Ba(TT)ery")
         self.dirname = os.path.dirname(__file__)
-        background = os.path.join(self.dirname, 'assets/background_menu.png')
+        background = os.path.join(self.dirname, 'assets/bg.png')
         self.BG = pygame.image.load(background)
         button = os.path.join(self.dirname, 'assets/menu_button.png')
         self.button_image = pygame.image.load(button)
@@ -24,16 +24,17 @@ class Settings:
         """resize all images"""
         self.size_x, self.size_y = self.SCREEN.get_size()
         self.font_size_menu = self.size_y/10
-        self.font_size_buttons = self.size_y/12
+        self.font_size_buttons = self.size_y/16
         self.BG = pygame.transform.scale(self.BG, (self.size_x, self.size_y))
         self.button_image = pygame.transform.scale(
-            self.button_image, (self.size_x/4, self.size_y/10))
+            self.button_image, (self.size_x*3/10, self.size_y*3/20))
 
-        self.KEY_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*1/3),
+
+        self.KEY_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*1/3),
                                   text_input="KEYS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="keys")
-        self.RESOLUTION_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*3/6),
+        self.RESOLUTION_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*3/6),
                                      text_input="RESOLUTIONS", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="resolution")
-        self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x*2/6, self.size_y*5/6),
+        self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*5/6),
                                   text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="menu")
 
         self.SCREEN.blit(self.BG, (0, 0))
