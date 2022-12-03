@@ -7,6 +7,8 @@ class Player(pygame.sprite.Sprite):
         Basic player class
         screen is the screen to draw to
         spriteSheet1 is the sprite sheet for the player"""
+        self.xDir = 1
+        self.yDir = 1
         self.map = map
         self.screen = screen
         self.state = "idle"
@@ -29,10 +31,12 @@ class Player(pygame.sprite.Sprite):
         self.events = []
         self.Vy = 0
         self.Vx = 0
+        self.flying = False
         self.physWidth = 48
-        self.physWidthOffset = 32
+        self.physWidthOffset = 0
         self.physHeight = 64
         self.physHeightOffset = 0
+        self.pressedKeys = []
         self.rect = pygame.Rect(
             -self.physicsX+self.physWidthOffset, -self.physicsY+self.physHeightOffset, self.physWidth, self.physHeight)
 
@@ -43,26 +47,26 @@ class Player(pygame.sprite.Sprite):
     def calculatePosition(self, delta):
         self.gravity(delta)
         self.mapY -= self.Vy * delta
-        self.physicsY -= self.Vy * delta
+        self.physicsY -= self.Vy * delta * self.yDir
 
         self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                 self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
         collisions = pygame.sprite.spritecollide(
             self, self.map.colliders, False)
-        if collisions:
+        while collisions:
             self.Vy = 0
-            self.mapY += 1
-            self.physicsY += 1
+            self.mapY += 1 * self.yDir
+            self.physicsY += 1 * self.yDir
             self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                     self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
             collisions = pygame.sprite.spritecollide(
                 self, self.map.colliders, False)
-        self.mapX -= self.Vx * delta
-        self.physicsX -= self.Vx * delta
-        if collisions:
+        self.mapX -= self.Vx * delta * self.xDir
+        self.physicsX -= self.Vx * delta * self.xDir
+        while collisions:
             self.Vx = 0
-            self.mapX += 1
-            self.physicsX += 1
+            self.mapX += 1 * self.xDir
+            self.physicsX += 1 * self.xDir
             self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
                                     self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
             collisions = pygame.sprite.spritecollide(
@@ -93,15 +97,23 @@ class Player(pygame.sprite.Sprite):
         for event in self.events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w and self.currentAnimation[0] != "jump":
+                    self.pressedKeys.append("w")
                     self.currentAnimation = [
                         "jump", 0,  self.currentAnimation[2], 0, 5]
+                    self.Vy = -500
+                    self.physicsY += 20
+                    self.mapY += 20
                 elif event.key == pygame.K_a and self.currentAnimation[0] != "walk":
                     print("walk")
+                    self.pressedKeys.append("a")
                     self.currentAnimation = ["walk", 0, 0, 0, 10]
-                    self.Vx = -100
+                    self.xDir = -1
+                    self.Vx = 100
                     self.currentAnimation[1] = 0
                 elif event.key == pygame.K_d and self.currentAnimation[0] != "walk":
+                    self.pressedKeys.append("d")
                     self.currentAnimation = ["walk", 0, 1, 0, 10]
+                    self.xDir = 1
                     self.Vx = 100
                     self.currentAnimation[1] = 0
                 elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
@@ -112,13 +124,29 @@ class Player(pygame.sprite.Sprite):
                 self.currentAnimation = ["attack", 0,
                                          self.currentAnimation[2], 0, 10]
             elif event.type == pygame.KEYUP:
+                try:
+                    if event.key == pygame.K_a:
+                        self.pressedKeys.remove("a")
+                        self.Vx = 0
+                    elif event.key == pygame.K_d:
+                        self.pressedKeys.remove("d")
+                        self.Vx = 0
+                    elif event.key == pygame.K_w:
+                        self.pressedKeys.remove("w")
+                except ValueError:
+                    pass
                 if self.currentAnimation[0] == "walk":
-                    self.Vx = 0
-                    print("idle")
                     self.frameCounter = 0
                     self.currentAnimation = ["default",
                                              0, self.currentAnimation[2], 0, 1]
         # self.gravity(1/60)
+        for key in self.pressedKeys:
+            if key == "a":
+                self.xDir = -1
+                self.Vx = 100
+            elif key == "d":
+                self.xDir = 1
+                self.Vx = 100
         self.calculatePosition(1/60)
         self.events = []
 
