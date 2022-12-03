@@ -21,6 +21,8 @@ class Player:
         # print(self.animations)
         self.x = self.screen.get_width() / 2
         self.y = self.screen.get_height() / 2
+        self.mapX = map.respawnPoint[0]
+        self.mapY = map.respawnPoint[1]
         self.frameCounter = 0
         self.events = []
 
@@ -65,6 +67,12 @@ class Player:
                 self.frameCounter = 0
                 self.currentAnimation = ["default",
                                          0, self.currentAnimation[2], 0, 1]
+        if self.currentAnimation[0] == "walk":
+            if self.currentAnimation[2] == 0:
+                self.mapX += 1
+            else:
+                self.mapX -= 1
+
         self.events = []
 
     def handleEvent(self, event):
