@@ -112,6 +112,9 @@ while gameStates.getState() != "exit":
                 player.update()
                 pygame.display.update()
                 clock.tick(60)
+                if gameStates.getState() == "exit":
+                    pygame.quit()
+                    sys.exit()
                 if player.inTeleporter():
                     PlayingThisLevel = False
                     break
@@ -137,6 +140,9 @@ while gameStates.getState() != "exit":
                 player.update()
                 pygame.display.update()
                 clock.tick(60)
+                if gameStates.getState() == "exit":
+                    pygame.quit()
+                    sys.exit()
                 if player.inTeleporter():
                     PlayingThisLevel = False
                     gameStates.setState("menu")
