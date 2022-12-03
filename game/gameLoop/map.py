@@ -52,18 +52,24 @@ class Map:
         # 32-33-34 - water puddle
         # 35-36-37-38-39-40 -Press space to dash
         # 41-42-43-44 -Avoid Water!!
-        # 45 long gray tile top left
-        # 46 long gray tile top middle
-        # 47 long gray tile top right
-        # 48 long gray tile bottom left
-        # 49 long gray tile bottom middle
-        # 50 long gray tile bottom right
-        # 51 short gray tile left
-        # 52 short gray tile middle
-        # 53 short gray tile right
-        # 54 very long gray tile left
-        # 55 very long gray tile middle
-        # 56 very lon gray tile right
+        #45 long gray tile top left
+        #46 long gray tile top middle
+        #47 long gray tile top right
+        #48 long gray tile bottom left
+        #49 long gray tile bottom middle
+        #50 long gray tile bottom right
+        #51 short gray tile left
+        #52 short gray tile middle
+        #53 short gray tile right
+        #54 very long gray tile left
+        #55 very long gray tile middle
+        #56 very long gray tile right
+        #57 gray tile machine #1
+        #58 gray tile machine #2
+        #59 bridge short pilar
+        #60 bridge long pilar top
+        #61 bridge long pilar bottom
+        #62 bridge no pilar
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
@@ -73,7 +79,8 @@ class Map:
                            28: [192, 0], 29: [192, 32], 30: [192, 64], 31: [544, 0], 32: [448, 512], 33: [480, 512], 34: [512, 512],
                            35: [384, 256], 36: [416, 256], 37: [448, 256], 38: [480, 256], 39: [512, 256], 40: [544, 256],
                            41: [448, 288], 42: [480, 288], 43: [512, 288], 44: [544, 288], 45: [320, 0], 46: [352, 0], 47: [416, 0], 48: [320, 32], 49: [352, 32],
-                           50: [416, 32], 51: [320, 96], 52: [352, 96], 53: [384, 192], 54: [320, 224], 55: [352, 192], 56: [352, 224]}
+                           50: [416, 32], 51: [320, 96], 52: [352, 96], 53: [384, 96], 54: [320, 192], 55: [352, 192], 56: [416,  192], 57: [480, 65], 58: [512, 65],
+                           59: [32, 225], 60: [32, 416], 61: [38,448], 62:[65, 225]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
