@@ -44,8 +44,9 @@ class Button:
         else:
             pygame.display.set_mode(isRes)
 
+
 class volume_button:
-    def __init__(self,screen, image, pos, text_input, font, base_color, value,gamestates, type):
+    def __init__(self,screen, image, pos, text_input, font, base_color, value):
         self.image = image
         self.value = value
         self.screen = screen
@@ -71,41 +72,41 @@ class volume_button:
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.onClick()
         return False
-    
+
     def changeColor(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.text = self.font.render(
                 self.text_input, True, self.base_color)
 
     def onClick(self):
+        mixer.Sound("game//assets//sounds//button.wav").play()
         f = open('game//volume.txt','r')
         volume = f.read()
         f.close()
-        f = open('game//volume.txt','w')
+        f = open('game//volume.txt', 'w')
         volume = float(volume)
         volume = volume*10
-        if self.value == 'UP':    
+        if self.value == 'UP':
             if volume > 9:
                 volume = 10.0
                 print(volume)
-               
-            elif volume<= 0:
+
+            elif volume <= 0:
                 volume += 1.0
                 print(volume)
             else:
                 volume += 1
                 print(volume)
+                
+            
         elif self.value == "DOWN":
-            if volume>= 1:
+            if volume >= 1:
                 volume -= 1
                 print(volume)
             elif volume < 1:
                 volume = 0.0
                 print(volume)
-               
+
         f.write(str(volume/10))
         f.close()
-        volume=volume / 10
-        mixer.music.set_volume(volume)
-        mixer.Sound("game//assets//sounds//button.wav").play()
-        
+        mixer.music.set_volume(volume/10)
