@@ -37,11 +37,12 @@ size_y = monitor_size[1]*2/3
 screen = pygame.display.set_mode((size_x, size_y), pygame.RESIZABLE)
 pygame.display.set_caption("My Game")
 clock = pygame.time.Clock()
+save = load_save()
 gameStates = GameStates()
 menu = MenuClass(size_x, size_y, screen, gameStates)
 settings = Settings(size_x, size_y, screen, gameStates)
 resolution = Resolution(size_x, size_y, screen, gameStates)
-controls = Controls(size_x, size_y, screen, gameStates)
+controls = Controls(size_x, size_y, screen, gameStates, save)
 while gameStates.getState() != "exit":
     while gameStates.getState() == "menu":
         # Path: game\mainmenu.py

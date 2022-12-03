@@ -5,7 +5,7 @@ def load_existing_save (savefile):
         controls = json. load(file)
     return controls
 def write_save (data):
-    with open(os .path.join(os -getcwd(), 'key_map.json'), 'w') as file:
+    with open(os .path.join(os.getcwd(), 'game.key_map.json'), 'w') as file:
         json.dump (data, file)
 
 def load_save ():

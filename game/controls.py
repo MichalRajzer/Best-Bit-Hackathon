@@ -1,10 +1,11 @@
 import pygame
 import os
 from button import Button
+from util import write_save
 
 
 class Controls:
-    def __init__(self, size_x: int, size_y: int, SCREEN, gamestates) -> None:
+    def __init__(self, size_x: int, size_y: int, SCREEN, gamestates, save) -> None:
         """create settings class"""
         self.gamestates = gamestates
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
@@ -31,27 +32,16 @@ class Controls:
         self.button_image = pygame.transform.scale(
             self.button_image, (self.size_x*3/10, self.size_y*3/20))
 
-        self.RES_1920_1080_BUTTON = Button(None, pos=(self.size_x/2, self.size_y*1/6),
-                                  text_input="1920x1080", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")        
-        self.RES_1080_720_BUTTON = Button(None, pos=(self.size_x/2, self.size_y*2/6),
-                                  text_input="1080x720", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
-        self.RES_800_600_BUTTON = Button(None, pos=(self.size_x/2, self.size_y*3/6),
-                                  text_input="800x600", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
+        
         self.BACK_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*5/6),
-                                  text_input="Yeey", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
+                                  text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="settings")
 
         self.SCREEN.blit(self.BG, (0, 0))
-        self.RES_1920_1080_BUTTON.update(self.SCREEN)
-        self.RES_1080_720_BUTTON.update(self.SCREEN)
-        self.RES_800_600_BUTTON.update(self.SCREEN)
         self.BACK_BUTTON.update(self.SCREEN)
 
     def update(self):
         """ Update menu """
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
-        self.RES_1920_1080_BUTTON.changeColor(self.MENU_MOUSE_POS)
-        self.RES_1080_720_BUTTON.changeColor(self.MENU_MOUSE_POS)
-        self.RES_800_600_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.BACK_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.resize()
 
@@ -59,17 +49,11 @@ class Controls:
         """ Odpowiada za klikanie """
         self.update()
         self.MENU_MOUSE_POS = mouse_pos
-        for button in [self.BACK_BUTTON, self.RES_800_600_BUTTON, self.RES_1080_720_BUTTON, self.RES_1920_1080_BUTTON]:
+        for button in [self.BACK_BUTTON]:
             button.changeColor(self.MENU_MOUSE_POS)
             button.update(self.SCREEN)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.RES_1920_1080_BUTTON.checkForInput(self.MENU_MOUSE_POS, isRes=(1920, 1080)):
-                pass
-            elif self.RES_1080_720_BUTTON.checkForInput(self.MENU_MOUSE_POS, isRes=(1080, 720)):
-                pass
-            elif self.RES_800_600_BUTTON.checkForInput(self.MENU_MOUSE_POS, isRes=(800, 600)):
-                pass
             self.BACK_BUTTON.checkForInput(self.MENU_MOUSE_POS)
         elif event.type == pygame.VIDEORESIZE:
             self.resize()
