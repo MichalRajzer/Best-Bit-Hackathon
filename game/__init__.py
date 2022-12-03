@@ -57,8 +57,9 @@ while gameStates.getState() != "exit":
             if event.type == pygame.QUIT:
                 gameStates.setState("exit")
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    gameStates.setState("game")
+                # if event.key == pygame.K_SPACE:
+                #     gameStates.setState("game")
+                pass
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
@@ -84,9 +85,9 @@ while gameStates.getState() != "exit":
         clock.tick(60)
 
     if gameStates.getState() == "game":
-        map = Map("game//assets//maps//map1.mp",
-                  "game//assets//Tiles//tilemap.png")
-        player = Player(screen, "game//assets//player//player.png", map)
+        map = Map("game\\assets\\maps\\map1.mp",
+                  "game\\assets\\Tiles\\tilemap.png")
+        player = Player(screen, "game\\assets\\player\\player.png", map)
         mixer.music.stop()
         while gameStates.getState() == "game":
             for event in pygame.event.get():

@@ -8,6 +8,7 @@ class Map:
         self.spriteSheet = SpriteSheet(spriteMap)
         self.colliders = []
         self.decorative = []
+        self.hazardous = []
         self.renderedImage = None
         self.loadMap(self.file)
         self.render()
@@ -46,13 +47,15 @@ class Map:
         # 28 = skyscraper wall right
         # 29 = skyscraper wall right
         # 30 = skyscraper wall right
+        # 31 = level label
+        # 32-33-34 - water puddle
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
-                           7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
-                           13: [96, 128], 14: [128, 128], 15: [160, 128], 16: [0, 160], 17: [32, 160],
-                           18: [64, 160], 19: [96, 160], 20: [128, 160], 21: [160, 160],
+                           7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
+                           13: [128, 128], 14: [160, 128], 15: [192, 128], 16: [32, 160], 17: [64, 160],
+                           18: [96, 160], 19: [128, 160], 20: [160, 160], 21: [192, 160],
                            22: [160, 0], 23: [160, 32], 24: [160, 64], 25: [224, 0], 26: [224, 32], 27: [224, 64],
-                           28: [192, 0], 29: [192, 32], 30: [192, 64]}
+                           28: [192, 0], 29: [192, 32], 30: [192, 64], 31: [544, 0], 32: [448, 512], 33: [480, 512], 34: [512, 512]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
@@ -62,20 +65,40 @@ class Map:
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             for y, line in enumerate(f.readlines()):
                 for x, symbols in enumerate(line.split()):
-                    if int(symbols) < 0:
-                        pass
+                    if "|" in symbols:
+                        for symbol in symbols.split("|"):
+                            if int(symbol) < 0:
+                                pass
+                            else:
+                                if int(symbol) in [0]:
+                                    self.decorative.append(
+                                        Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
+                                elif int(symbol) in [32, 33, 34]:
+                                    self.hazardous.append(
+                                        Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
+                                else:
+                                    self.colliders.append(
+                                        Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
                     else:
-                        if int(symbols) in [0]:
-                            self.decorative.append(
-                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                        if int(symbols) < 0:
+                            pass
                         else:
-                            self.colliders.append(
-                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                            if int(symbols) in [0]:
+                                self.decorative.append(
+                                    Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                            elif int(symbols) in [32, 33, 34]:
+                                self.hazardous.append(
+                                    Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                            else:
+                                self.colliders.append(
+                                    Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
 
     def render(self):
         for tile in self.colliders:
             tile.draw(self.renderedImage)
         for tile in self.decorative:
+            tile.draw(self.renderedImage)
+        for tile in self.hazardous:
             tile.draw(self.renderedImage)
 
     def getMap(self):
