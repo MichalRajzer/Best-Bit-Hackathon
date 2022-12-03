@@ -82,7 +82,7 @@ while gameStates.getState() != "exit":
         clock.tick(60)
 
     if gameStates.getState() == "game":
-        map = Map("game\\assets\\maps\\map1.mp",
+        map = Map("game\\assets\\maps\\map2.mp",
                   "game\\assets\\Tiles\\tilemap.png")
         player = Player(screen, "game\\assets\\player\\player.png", map)
         mixer.music.stop()

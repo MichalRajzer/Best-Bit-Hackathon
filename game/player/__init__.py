@@ -108,13 +108,13 @@ class Player(pygame.sprite.Sprite):
                     self.pressedKeys.append("a")
                     self.currentAnimation = ["walk", 0, 0, 0, 10]
                     self.xDir = -1
-                    self.Vx = 100
+                    self.Vx = 200
                     self.currentAnimation[1] = 0
                 elif event.key == pygame.K_d and self.currentAnimation[0] != "walk":
                     self.pressedKeys.append("d")
                     self.currentAnimation = ["walk", 0, 1, 0, 10]
                     self.xDir = 1
-                    self.Vx = 100
+                    self.Vx = 200
                     self.currentAnimation[1] = 0
                 elif event.key == pygame.K_f and self.currentAnimation[0] != "death":
                     self.currentAnimation = [
@@ -143,10 +143,10 @@ class Player(pygame.sprite.Sprite):
         for key in self.pressedKeys:
             if key == "a":
                 self.xDir = -1
-                self.Vx = 100
+                self.Vx = 200
             elif key == "d":
                 self.xDir = 1
-                self.Vx = 100
+                self.Vx = 200
         self.calculatePosition(1/60)
         self.events = []
 
