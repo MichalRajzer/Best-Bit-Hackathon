@@ -55,8 +55,9 @@ while gameStates.getState() != "exit":
             if event.type == pygame.QUIT:
                 gameStates.setState("exit")
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    gameStates.setState("game")
+                # if event.key == pygame.K_SPACE:
+                #     gameStates.setState("game")
+                pass
             else:
                 menu.menuLoop(event, pygame.mouse.get_pos())
         clock.tick(60)
