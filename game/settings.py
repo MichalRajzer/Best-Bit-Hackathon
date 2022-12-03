@@ -41,8 +41,8 @@ class Settings:
         volum = f.read()
         f.close()
         volum = float(volum)
-        volum = volum*10
-        self.VOLUME = str(int(volum))
+        volum = int(volum*10)
+        self.VOLUME = str(volum )
         self.VOLUME_BUTTON = volume_button(self.SCREEN, pos=(self.size_x/2, self.size_y*5/8), text_input="VOLUME", image=self.button_image, font=get_font(self.font_size_menu),base_color="#d7fcd4", value=0,gamestates=self.gamestates, type="settings")
         self.MONITOR_VOLUME = volume_button(self.SCREEN,pos=(self.size_x*3/4, self.size_y*15/24), image=self.button_music,text_input= self.VOLUME,base_color="#d7fcd4",font=get_font(self.font_size_menu), value= 0,gamestates=self.gamestates, type="settings")
         self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "UP",gamestates=self.gamestates, type="settings")
