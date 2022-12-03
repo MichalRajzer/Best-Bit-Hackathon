@@ -29,23 +29,44 @@ class Player(pygame.sprite.Sprite):
         self.events = []
         self.Vy = 0
         self.Vx = 0
-        self.rect = pygame.Rect(self.physicsX+32, self.physicsY+32, 64, 64)
+        self.physWidth = 48
+        self.physWidthOffset = 32
+        self.physHeight = 64
+        self.physHeightOffset = 0
+        self.rect = pygame.Rect(
+            -self.physicsX+self.physWidthOffset, -self.physicsY+self.physHeightOffset, self.physWidth, self.physHeight)
 
     def gravity(self, delta):
-        #self.Vy += 1000*delta
+        self.Vy += 1000*delta
         pass
 
     def calculatePosition(self, delta):
+        self.gravity(delta)
         self.mapY -= self.Vy * delta
-        self.mapX -= self.Vx * delta
         self.physicsY -= self.Vy * delta
-        self.physicsX -= self.Vx * delta
 
-        self.rect = pygame.Rect(-self.physicsX, -self.physicsY, 64, 64)
+        self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
+                                self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
         collisions = pygame.sprite.spritecollide(
             self, self.map.colliders, False)
         if collisions:
-            print("collision")
+            self.Vy = 0
+            self.mapY += 1
+            self.physicsY += 1
+            self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
+                                    self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
+            collisions = pygame.sprite.spritecollide(
+                self, self.map.colliders, False)
+        self.mapX -= self.Vx * delta
+        self.physicsX -= self.Vx * delta
+        if collisions:
+            self.Vx = 0
+            self.mapX += 1
+            self.physicsX += 1
+            self.rect = pygame.Rect(-self.physicsX+self.physWidthOffset, -
+                                    self.physicsY+self.physWidthOffset, self.physWidth, self.physHeight)
+            collisions = pygame.sprite.spritecollide(
+                self, self.map.colliders, False)
 
     def update(self):
         """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
@@ -97,7 +118,7 @@ class Player(pygame.sprite.Sprite):
                     self.frameCounter = 0
                     self.currentAnimation = ["default",
                                              0, self.currentAnimation[2], 0, 1]
-        self.gravity(1/60)
+        # self.gravity(1/60)
         self.calculatePosition(1/60)
         self.events = []
 
