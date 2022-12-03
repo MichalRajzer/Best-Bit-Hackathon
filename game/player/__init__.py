@@ -105,10 +105,10 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(
             pygame.transform.scale(self.animations[self.currentAnimation[0]][self.currentAnimation[2]][self.currentAnimation[3]][self.currentAnimation[1]], (64, 64)), (self.x, self.y))
         #
-        pygame.draw.rect(self.screen, (255, 0, 0), self.rect)
-        for tile in self.map.colliders:
-            pygame.draw.rect(self.screen, (0, 255, 0), tile.rect)
-        #
+        ##pygame.draw.rect(self.screen, (255, 0, 0), self.rect)
+        # for tile in self.map.colliders:
+        #    pygame.draw.rect(self.screen, (0, 255, 0), tile.rect)
+        ##
         for event in self.events:
             if event.type == pygame.KEYDOWN and self.alive:
                 if event.key == self.keybinds["Jump"] and self.currentAnimation[0] != "jump":
