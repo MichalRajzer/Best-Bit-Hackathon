@@ -102,17 +102,6 @@ class Map:
             self.screenY = int(data[0])
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
-            self.background = int(data[4])
-            if self.background == 1:
-                self.background = pygame.image.load(
-                    "game\\assets\\maps\\bg_1.png")
-            if self.background == 2:
-                self.background = pygame.image.load(
-                    "game\\assets\\maps\\bg_2.png")
-            # scale background to cover screen
-            self.background = pygame.transform.scale(
-                self.background, (self.screenX*2, self.background.get_size()[1]*self.screenX*2/self.background.get_size()[0]))
-
             self.renderedImage = pygame.Surface(
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             # self.renderedImage.blit(self.background, (0, 0))
@@ -121,7 +110,8 @@ class Map:
                     if "|" in symbols:
                         for symbol in symbols.split("|"):
                             if int(symbol) < 0:
-                                pass
+                                self.teleporter = Tile(
+                                    tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet)
                             else:
                                 if int(symbol) in [0]:
                                     self.decorative.append(
@@ -134,7 +124,8 @@ class Map:
                                         Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
                     else:
                         if int(symbols) < 0:
-                            pass
+                            self.teleporter = Tile(
+                                tileInSpriteMap[1], x*64, y*64, self.spriteSheet)
                         else:
                             if int(symbols) in [0, 31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 75]:
                                 self.decorative.append(

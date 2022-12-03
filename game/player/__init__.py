@@ -92,6 +92,12 @@ class Player(pygame.sprite.Sprite):
         elif self.physicsY < self.map.respawnPoint[1] - self.map.screenY*2 - 50:
             print("respawn now")
 
+    def inTeleporter(self):
+        if self.map.teleporter.rect.colliderect(self.rect):
+            return True
+        else:
+            return False
+
     def update(self):
         """Updates the player, BUT DOESN'T UPDATE THE SCREEN"""
         self.frameCounter += 1
