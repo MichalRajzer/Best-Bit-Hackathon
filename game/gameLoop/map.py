@@ -52,38 +52,38 @@ class Map:
         # 32-33-34 - water puddle
         # 35-36-37-38-39-40 -Press space to dash
         # 41-42-43-44 -Avoid Water!!
-        #45 long gray tile top left
-        #46 long gray tile top middle
-        #47 long gray tile top right
-        #48 long gray tile bottom left
-        #49 long gray tile bottom middle
-        #50 long gray tile bottom right
-        #51 short gray tile left
-        #52 short gray tile middle
-        #53 short gray tile right
-        #54 very long gray tile left
-        #55 very long gray tile middle
-        #56 very long gray tile right
-        #57 gray tile machine #1
-        #58 gray tile machine #2
-        #59 bridge short pilar
-        #60 bridge long pilar top
-        #61 bridge long pilar bottom
-        #62 bridge no pilar
-        #63 long brick top left
-        #64 long brick top middle
-        #65 long brick top right
-        #66 long brick middle left
-        #67 long brick middle middle
-        #68 long brick middle right
-        #69 long brick bottom left
-        #70 long brick bottom middle
-        #71 long brick bottom right
-        #72 short brick left
-        #73 short brick middle
-        #74 short brick right
-        #75 sign "carefull, there's water"
-        #76-77-78-79 lamp
+        # 45 long gray tile top left
+        # 46 long gray tile top middle
+        # 47 long gray tile top right
+        # 48 long gray tile bottom left
+        # 49 long gray tile bottom middle
+        # 50 long gray tile bottom right
+        # 51 short gray tile left
+        # 52 short gray tile middle
+        # 53 short gray tile right
+        # 54 very long gray tile left
+        # 55 very long gray tile middle
+        # 56 very long gray tile right
+        # 57 gray tile machine #1
+        # 58 gray tile machine #2
+        # 59 bridge short pilar
+        # 60 bridge long pilar top
+        # 61 bridge long pilar bottom
+        # 62 bridge no pilar
+        # 63 long brick top left
+        # 64 long brick top middle
+        # 65 long brick top right
+        # 66 long brick middle left
+        # 67 long brick middle middle
+        # 68 long brick middle right
+        # 69 long brick bottom left
+        # 70 long brick bottom middle
+        # 71 long brick bottom right
+        # 72 short brick left
+        # 73 short brick middle
+        # 74 short brick right
+        # 75 sign "carefull, there's water"
+        # 76-77-78-79 lamp
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
@@ -94,8 +94,8 @@ class Map:
                            35: [384, 256], 36: [416, 256], 37: [448, 256], 38: [480, 256], 39: [512, 256], 40: [544, 256],
                            41: [448, 288], 42: [480, 288], 43: [512, 288], 44: [544, 288], 45: [320, 0], 46: [352, 0], 47: [416, 0], 48: [320, 32], 49: [352, 32],
                            50: [416, 32], 51: [320, 96], 52: [352, 96], 53: [384, 96], 54: [320, 192], 55: [352, 192], 56: [416,  192], 57: [480, 65], 58: [512, 65],
-                           59: [32, 225], 60: [32, 416], 61: [38,448], 62: [65, 225], 63: [32, 288], 64: [64, 288], 65: [96, 288], 66: [32, 320], 67: [64, 320], 
-                           68: [96, 320], 69: [32, 352], 70: [64, 352], 71: [96, 352], 72: [160, 288], 73: [192, 288], 74: [224, 288], 75: [544, 512], 76: [400, 448], 
+                           59: [32, 225], 60: [32, 416], 61: [38, 448], 62: [65, 225], 63: [32, 288], 64: [64, 288], 65: [96, 288], 66: [32, 320], 67: [64, 320],
+                           68: [96, 320], 69: [32, 352], 70: [64, 352], 71: [96, 352], 72: [160, 288], 73: [192, 288], 74: [224, 288], 75: [544, 512], 76: [400, 448],
                            77: [416, 448], 78: [416, 480], 79: [416, 512]}
         with open(file, "r") as f:
             data = f.readline().split(";")
@@ -136,7 +136,7 @@ class Map:
                         if int(symbols) < 0:
                             pass
                         else:
-                            if int(symbols) in [0, 31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]:
+                            if int(symbols) in [0, 31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 75]:
                                 self.decorative.append(
                                     Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
                             elif int(symbols) in [32, 33, 34]:
