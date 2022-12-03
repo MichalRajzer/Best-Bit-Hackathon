@@ -36,10 +36,12 @@ class Map:
         # 18 = special wall with middle wall
         # 19 = special wall with lincoln poster 1
         # 20 = special wall with middle wall
+        # 21 = special wall with big nuclear poster 2
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
-                           13: [96, 128], 14: [128, 128], 15: [160, 128], 16: [96, 160], 17: [160, 160]}
+                           13: [96, 128], 14: [128, 128], 15: [160, 128], 16: [0, 160], 17: [32, 160],
+                           18: [64, 160], 19: [96, 160], 20: [128, 160], 21: [160, 160]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
