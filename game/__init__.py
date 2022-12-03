@@ -87,7 +87,8 @@ while gameStates.getState() != "exit":
     if gameStates.getState() == "game":
         map = Map("game\\assets\\maps\\map1.mp",
                   "game\\assets\\Tiles\\tilemap.png")
-        player = Player(screen, "game\\assets\\player\\player.png", map)
+        player = Player(screen, "game\\assets\\player\\player.png", map, {
+                        "Left": 97, "Right": 100, "Jump": 119, "Dash": 32, "Stop": 27})
         mixer.music.stop()
         while gameStates.getState() == "game":
             for event in pygame.event.get():
