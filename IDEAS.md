@@ -5,3 +5,6 @@
 - TODO MAKE SAVES - for last 4 hours
 - TODO MAKE ENEMIES
 - TODO MAKE SOUNDS 
+
+
+Glosnosc na mikro -> jasnosc ekranu 

@@ -55,6 +55,9 @@ class Map:
     def getMap(self):
         return self.renderedImage
 
+    def scale(self, scale):
+        return pygame.transform.scale(self.renderedImage, (int(self.screenX * scale), int(self.screenY * scale)))
+
     def scaledToHeight(self, height):
         return pygame.transform.scale(self.renderedImage, (int(self.screenX * height/self.screenY), height))
 
