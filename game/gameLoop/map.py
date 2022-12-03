@@ -86,7 +86,7 @@ class Map:
                             if int(symbols) in [0]:
                                 self.decorative.append(
                                     Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
-                            elif int(symbols) in []:
+                            elif int(symbols) in [32, 33, 34]:
                                 self.hazardous.append(
                                     Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
                             else:
