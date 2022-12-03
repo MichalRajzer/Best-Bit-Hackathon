@@ -29,19 +29,24 @@ class Settings:
     def resize(self):
         """resize all images"""
         self.size_x, self.size_y = self.SCREEN.get_size()
-        self.font_size_menu = self.size_y*1/19
+        self.font_size_menu = self.size_y*1/22
         self.font_size_buttons = self.size_y/16
         self.button_music = pygame.transform.scale(self.button_music, (int(self.size_x/5), int(self.size_y/5)))
         self.BG = pygame.transform.scale(self.BG, (self.size_x, self.size_y))
         self.button_image = pygame.transform.scale(
             self.button_image, (self.size_x*3/10, self.size_y*3/20))
         self.button_image_res = pygame.transform.scale(
-            self.button_image, (self.size_x*5/10, self.size_y*3/20))
-
-        self.VOLUME_BUTTON = volume_button(self.SCREEN, pos=(self.size_x/2, self.size_y*5/8), text_input="VOLUME", image=self.button_image, font=get_font(self.font_size_menu),base_color="#d7fcd4", value=0)
-        self.BUTTON_MUSIC = volume_button(self.SCREEN,pos=(self.size_x*3/4, self.size_y*15/24), image=self.button_music,text_input= " ",base_color="#d7fcd4",font=get_font(self.font_size_menu), value= 0)
-        self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "UP")
-        self.VOLUME_DOWN = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*9/12),image = self.arrow_down, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "DOWN")            
+            self.button_image, (self.size_x*4/10, self.size_y*3/20))
+        f = open('game//volume.txt','r')
+        volum = f.read()
+        f.close()
+        volum = float(volum)
+        volum = volum*10
+        self.VOLUME = str(int(volum))
+        self.VOLUME_BUTTON = volume_button(self.SCREEN, pos=(self.size_x/2, self.size_y*5/8), text_input="VOLUME", image=self.button_image, font=get_font(self.font_size_menu),base_color="#d7fcd4", value=0,gamestates=self.gamestates, type="settings")
+        self.MONITOR_VOLUME = volume_button(self.SCREEN,pos=(self.size_x*3/4, self.size_y*15/24), image=self.button_music,text_input= self.VOLUME,base_color="#d7fcd4",font=get_font(self.font_size_menu), value= 0,gamestates=self.gamestates, type="settings")
+        self.VOLUME_UP = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*6/12),image = self.arrow_up, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "UP",gamestates=self.gamestates, type="settings")
+        self.VOLUME_DOWN = volume_button(self.SCREEN, pos=(self.size_x*3/4, self.size_y*9/12),image = self.arrow_down, text_input= ' ',base_color="#d7fcd4", font=get_font(self.font_size_menu), value= "DOWN",gamestates=self.gamestates, type="settings")            
         self.CONTROLS_BUTTON = Button(self.button_image, pos=(self.size_x/2, self.size_y*2/12),
                                   text_input="CONTROLS", font=get_font(self.font_size_menu), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="controls")
         self.RESOLUTION_BUTTON = Button(self.button_image_res, pos=(self.size_x/2, self.size_y*9/24),
@@ -50,7 +55,7 @@ class Settings:
                                   text_input="BACK", font=get_font(self.font_size_buttons), base_color="#d7fcd4", hovering_color="White", gamestates=self.gamestates, type="menu")
 
         self.SCREEN.blit(self.BG, (0, 0))
-        self.BUTTON_MUSIC.update(self.SCREEN)
+        self.MONITOR_VOLUME.update(self.SCREEN)
         self.VOLUME_BUTTON.update(self.SCREEN)
         self.VOLUME_DOWN.update(self.SCREEN)
         self.VOLUME_UP.update(self.SCREEN)
@@ -61,7 +66,7 @@ class Settings:
     def update(self):
         """ Update menu """
         self.MENU_MOUSE_POS = pygame.mouse.get_pos()
-        self.BUTTON_MUSIC.changeColor(self.MENU_MOUSE_POS)
+        self.MONITOR_VOLUME.changeColor(self.MENU_MOUSE_POS)
         self.VOLUME_UP.changeColor(self.MENU_MOUSE_POS)
         self.VOLUME_BUTTON.changeColor(self.MENU_MOUSE_POS)
         self.VOLUME_DOWN.changeColor(self.MENU_MOUSE_POS)
