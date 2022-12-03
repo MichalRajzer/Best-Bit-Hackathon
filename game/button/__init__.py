@@ -1,3 +1,6 @@
+import pygame
+
+
 class Button:
     def __init__(self, image, pos, text_input, font, base_color, hovering_color, gamestates, type):
         self.image = image
@@ -20,9 +23,9 @@ class Button:
             screen.blit(self.image, self.rect)
         screen.blit(self.text, self.text_rect)
 
-    def checkForInput(self, position):
+    def checkForInput(self, position, isRes=False):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-            self.onClick()
+            self.onClick(isRes=isRes)
         return False
 
     def changeColor(self, position):
@@ -33,5 +36,8 @@ class Button:
             self.text = self.font.render(
                 self.text_input, True, self.base_color)
 
-    def onClick(self):
-        self.gamestates.setState(self.type)
+    def onClick(self, isRes=False):
+        if isRes == False:
+            self.gamestates.setState(self.type)
+        else:
+            pygame.display.set_mode(isRes)
