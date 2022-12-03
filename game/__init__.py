@@ -7,7 +7,7 @@ from settings import Settings
 class GameStates:
     def __init__(self) -> None:
         self.gameState = "menu"
-        self.gameStateList = ["menu", "game",
+        self.gameStateList = ["menu", "game", 
                               "pause", "settings", "credits", "exit"]
 
     def getState(self):
