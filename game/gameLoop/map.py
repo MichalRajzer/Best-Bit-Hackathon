@@ -17,6 +17,7 @@ class Map:
     def loadMap(self, file):
         # map is defined as a grid of tiles
         # Each tile has a number which tells the game what it is
+        # -2 = killer empyt barrier
         # 0 = empty space
         # 1 = basic tile with top left wall
         # 2 = basic tile with top wall
@@ -84,7 +85,7 @@ class Map:
         # 74 short brick right
         # 75 sign "carefull, there's water"
         # 76-77-78-79 lamp
-        tileInSpriteMap = {0: [0, 0],
+        tileInSpriteMap = {0: [0, 0], -2: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
                            13: [128, 128], 14: [160, 128], 15: [192, 128], 16: [32, 160], 17: [64, 160],
@@ -109,28 +110,28 @@ class Map:
                 for x, symbols in enumerate(line.split()):
                     if "|" in symbols:
                         for symbol in symbols.split("|"):
-                            if int(symbol) < 0:
+                            if int(symbol) == -1:
                                 self.teleporter = Tile(
                                     tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet)
                             else:
                                 if int(symbol) in [0]:
                                     self.decorative.append(
                                         Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
-                                elif int(symbol) in [32, 33, 34]:
+                                elif int(symbol) in [32, 33, 34, -2]:
                                     self.hazardous.append(
                                         Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
                                 else:
                                     self.colliders.append(
                                         Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
                     else:
-                        if int(symbols) < 0:
+                        if int(symbols) == -1:
                             self.teleporter = Tile(
                                 tileInSpriteMap[1], x*64, y*64, self.spriteSheet)
                         else:
                             if int(symbols) in [0, 31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 75]:
                                 self.decorative.append(
                                     Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
-                            elif int(symbols) in [32, 33, 34]:
+                            elif int(symbols) in [32, 33, 34, -2]:
                                 self.hazardous.append(
                                     Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
                             else:
