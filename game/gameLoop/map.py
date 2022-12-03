@@ -73,9 +73,15 @@ class Map:
         #63 long brick top left
         #64 long brick top middle
         #65 long brick top right
-        #66 long brick bottom left
-        #67 long brick bottom middle
-        #68 long brick bottom right
+        #66 long brick middle left
+        #67 long brick middle middle
+        #68 long brick middle right
+        #69 long brick bottom left
+        #70 long brick bottom middle
+        #71 long brick bottom right
+        #72 short brick left
+        #73 short brick middle
+        #74 short brick right
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [32, 128], 11: [64, 128], 12: [96, 128],
@@ -86,7 +92,8 @@ class Map:
                            35: [384, 256], 36: [416, 256], 37: [448, 256], 38: [480, 256], 39: [512, 256], 40: [544, 256],
                            41: [448, 288], 42: [480, 288], 43: [512, 288], 44: [544, 288], 45: [320, 0], 46: [352, 0], 47: [416, 0], 48: [320, 32], 49: [352, 32],
                            50: [416, 32], 51: [320, 96], 52: [352, 96], 53: [384, 96], 54: [320, 192], 55: [352, 192], 56: [416,  192], 57: [480, 65], 58: [512, 65],
-                           59: [32, 225], 60: [32, 416], 61: [38,448], 62:[65, 225]}
+                           59: [32, 225], 60: [32, 416], 61: [38,448], 62: [65, 225], 63: [32, 288], 64: [64, 288], 65: [96, 288], 66: [32, 320], 67: [64, 320], 
+                           68: [96, 320], 69: [32, 352], 70: [64, 352], 71: [96, 352], 72: [160, 288], 73: [192, 288], 74: [224, 288]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
