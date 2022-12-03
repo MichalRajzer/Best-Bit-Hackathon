@@ -15,23 +15,26 @@ class Map:
         # map is defined as a grid of tiles
         # Each tile has a number which tells the game what it is
         # 0 = empty space
-        # 1 = basic tile with top left grass
-        # 2 = basic tile with top grass
-        # 3 = basic tile with top right grass
-        # 4 = basic tile with left grass
-        # 5 = basic tile with middle grass
-        # 6 = basic tile with right grass
-        # 7 = basic tile with bottom left grass
-        # 8 = basic tile with bottom grass
-        # 9 = basic tile with bottom right grass
-        # 10 = special grass with top left grass
-        # 11 = special grass with top grass
-        # 12 = special grass with top grass
-        # 13 = special grass with top grass
-        # 14 = special grass with top grass
-        # 15 = special grass with top right grass
-        tileInSpriteMap = {0: [0, 0], 1: [
-            32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32], 7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128], 13: [96, 128], 14: [128, 128], 15: [160, 128]}
+        # 1 = basic tile with top left wall
+        # 2 = basic tile with top wall
+        # 3 = basic tile with top right wall
+        # 4 = basic tile with left wall
+        # 5 = basic tile with middle wall
+        # 6 = basic tile with right wall
+        # 7 = basic tile with bottom left wall
+        # 8 = basic tile with bottom wall
+        # 9 = basic tile with bottom right wall
+        # 10 = special wall with top left wall
+        # 11 = special wall with top wall
+        # 12 = special wall with top wall
+        # 13 = special wall with top wall
+        # 14 = special wall with top wall
+        # 15 = special wall with top right wall
+
+        tileInSpriteMap = {0: [0, 0],
+                           1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
+                           7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
+                           13: [96, 128], 14: [128, 128], 15: [160, 128]}
         with open(file, "r") as f:
             data = f.readline().split(";")
             self.screenY = int(data[0])
