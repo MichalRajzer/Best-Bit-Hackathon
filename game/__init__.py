@@ -136,6 +136,5 @@ while gameStates.getState() != "exit":
             clock.tick(60)
             if player.inTeleporter():
                 gameStates.setState("menu")
-
 pygame.quit()
 sys.exit()
