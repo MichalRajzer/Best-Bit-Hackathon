@@ -85,10 +85,13 @@ class volume_button:
         volume = volume*10
         if self.value == 'UP':    
             if volume > 9:
-                volume = 10
+                volume = 10.0
                 print(volume)
                
             elif volume<= 0:
+                volume += 1.0
+                print(volume)
+            else:
                 volume += 1
                 print(volume)
                 
@@ -97,10 +100,8 @@ class volume_button:
             if volume>= 1:
                 volume -= 1
                 print(volume)
-                
-               
             elif volume < 1:
-                volume = 0
+                volume = 0.0
                 print(volume)
                
         f.write(str(volume/10))
