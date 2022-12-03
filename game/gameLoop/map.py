@@ -8,6 +8,7 @@ class Map:
         self.spriteSheet = SpriteSheet(spriteMap)
         self.colliders = []
         self.decorative = []
+        self.hazardous = []
         self.renderedImage = None
         self.loadMap(self.file)
         self.render()
@@ -68,6 +69,9 @@ class Map:
                         if int(symbols) in [0]:
                             self.decorative.append(
                                 Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
+                        elif int(symbols) in []:
+                            self.hazardous.append(
+                                Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
                         else:
                             self.colliders.append(
                                 Tile(tileInSpriteMap[int(symbols)], x*64, y*64, self.spriteSheet))
@@ -76,6 +80,8 @@ class Map:
         for tile in self.colliders:
             tile.draw(self.renderedImage)
         for tile in self.decorative:
+            tile.draw(self.renderedImage)
+        for tile in self.hazardous:
             tile.draw(self.renderedImage)
 
     def getMap(self):
