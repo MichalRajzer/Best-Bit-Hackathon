@@ -92,11 +92,17 @@ class Map:
             self.screenY = int(data[0])
             self.screenX = int(data[1])
             self.respawnPoint = (int(data[2]), int(data[3]))
-            self.background = pygame.image.load(
-                "game\\assets\\maps\\bg_2.png")
-            # scale background to cover renderedImage
+            self.background = int(data[4])
+            if self.background == 1:
+                self.background = pygame.image.load(
+                    "game\\assets\\maps\\bg_1.png")
+            if self.background == 2:
+                self.background = pygame.image.load(
+                    "game\\assets\\maps\\bg_2.png")
+            # scale background to cover screen
             self.background = pygame.transform.scale(
-                self.background, (self.screenX*2, self.screenY*2))
+                self.background, (self.screenX*2, self.background.get_size()[1]*self.screenX*2/self.background.get_size()[0]))
+
             self.renderedImage = pygame.Surface(
                 (self.screenX*2, self.screenY*2), pygame.SRCALPHA, 32).convert_alpha()
             self.renderedImage.blit(self.background, (0, 0))
