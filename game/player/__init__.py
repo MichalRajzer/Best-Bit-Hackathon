@@ -2,7 +2,7 @@ import pygame
 
 
 class Player:
-    def __init__(self, screen, spriteSheet1, spriteSheet2) -> None:
+    def __init__(self, screen, spriteSheet) -> None:
         """
         Basic player class
         screen is the screen to draw to
@@ -11,7 +11,7 @@ class Player:
         # TODO UPDATE FOR TWO CHARGED AND NOT CHARGED STATES
         self.screen = screen
         self.state = "idle"
-        self.sprite_sheet = pygame.image.load(spriteSheet1).convert_alpha()
+        self.sprite_sheet = pygame.image.load(spriteSheet).convert_alpha()
         self.listOfAnimations = ["default", "walk",
                                  "jump", "run", "attack", "death"]
         self.animations = {key: None
