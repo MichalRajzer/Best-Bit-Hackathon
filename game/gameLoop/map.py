@@ -124,7 +124,8 @@ class Map:
                                         Tile(tileInSpriteMap[int(symbol)], x*64, y*64, self.spriteSheet))
                     else:
                         if int(symbols) < 0:
-                            pass
+                            self.teleporter = Tile(
+                                tileInSpriteMap[1], x*64, y*64, self.spriteSheet)
                         else:
                             if int(symbols) in [0, 31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 75]:
                                 self.decorative.append(
