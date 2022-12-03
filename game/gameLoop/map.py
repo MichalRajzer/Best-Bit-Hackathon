@@ -31,11 +31,11 @@ class Map:
         # 13 = special wall with lincoln poster 1
         # 14 = special wall with small nuclear poster
         # 15 = special wall with big nuclear poster 1
-        # 16 = special wall with top wall
-        # 17 = special wall with top wall
-        # 18 = special wall with top wall
+        # 16 = special wall with middle wall
+        # 17 = special wall with middle wall
+        # 18 = special wall with middle wall
         # 19 = special wall with lincoln poster 1
-        # 20 = special wall with top wall
+        # 20 = special wall with middle wall
         tileInSpriteMap = {0: [0, 0],
                            1: [32, 0], 2: [64, 0], 3: [96, 0], 4: [32, 32], 5: [64, 32], 6: [96, 32],
                            7: [32, 64], 8: [64, 64], 9: [96, 64], 10: [0, 128], 11: [32, 128], 12: [64, 128],
