@@ -57,10 +57,13 @@ while gameStates.getState() != "exit":
         clock.tick(60)
         # pygame.display.update()
     if gameStates.gameState() == "game":
-        player = Player(screen, "game\\assets\\player.png")
-        map = Map("")
+        map = Map("game\\assets\\map.mp", "game\\assets\\Tiles\\tilemap.png")
+        player = Player(screen, "game\\assets\\player.png", map)
         while gameStates.getState() == "game":
-            pass
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameStates.setState("exit")
+                player.handleEvent(event)
 
 
 pygame.quit()
