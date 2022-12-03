@@ -13,7 +13,7 @@ class Player:
         self.state = "idle"
         self.sprite_sheet = pygame.image.load(spriteSheet1).convert_alpha()
         self.listOfAnimations = ["default", "walk",
-                                 "jump", "run", "attack", "fall"]
+                                 "jump", "run", "attack", "death"]
         self.animations = {key: None
                            for key in self.listOfAnimations}
         # [animation, current frame, direction, charged]
@@ -59,6 +59,11 @@ class Player:
                       [640, 32, 32]]
             anim = self.parseAnimation(frames)
             self.animations["jump"] = [anim, None]
+        elif animation == "run":
+            frames = [[704, 32, 32], [768, 32, 32],
+                      [832, 32, 32], [896, 32, 32], ]
+            anim = self.parseAnimation(frames)
+            self.animations["run"] = [anim, None]
 
     def parseAnimation(self, frames):
         leftAnimNotCharged = []
@@ -107,6 +112,7 @@ if __name__ == '__main__':
     # animation = ["walk", 4]
     # animation = ["jump", 6]
     # animation = ["run", 4]
+    animation = ["attack", 2]
     while True:
         screen.fill((70, 0, 70))
         playerImg1 = player.animations[animation[0]][0][0][0][i]
