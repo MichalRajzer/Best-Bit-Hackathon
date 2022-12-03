@@ -2,7 +2,7 @@ import pygame
 
 
 class PlayerController:
-    def __init__(self, player, keyUp=pygame.K_w, keyDown=pygame.K_s, keyLeft=pygame.K_a, keyRight=pygame.K_d) -> None:
+    def __init__(self, player, map, keyUp=pygame.K_w, keyDown=pygame.K_s, keyLeft=pygame.K_a, keyRight=pygame.K_d) -> None:
         """
         Basic player controller
         player to be the player object to be controlled"""
@@ -11,6 +11,7 @@ class PlayerController:
         self.keyLeft = keyLeft
         self.keyRight = keyRight
         self.player = player
+        self.map = map
 
     def update(self, events):
         """
@@ -29,4 +30,4 @@ class PlayerController:
 
     def move(self, direction):
         """Move player in a direction (0 = up, 1 = down, 2 = left, 3 = right)"""
-        self.player.move()
+        self.map.move(direction, self.speed)
